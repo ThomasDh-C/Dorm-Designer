@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Canvas from '../components/canvas'
 
 function Home() {
   return (
@@ -10,7 +11,7 @@ function Home() {
       </Head>
 
       <main className={styles.main}>
-
+        <Canvas />
       </main>
 
       <footer className={styles.footer}>
