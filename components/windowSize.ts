@@ -33,7 +33,7 @@ export const useRefDimensions = (myRef) => {
             setWidth(myRef.current.offsetWidth)
             setHeight(myRef.current.offsetHeight)
         }
-        
+
         window.addEventListener('resize', handleResize)
 
         return () => {

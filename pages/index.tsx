@@ -1,7 +1,12 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import NativeEditor from '../components/nativeeditor'
-import KonvaEditor from '../components/konvaeditor'
+import NativeEditor from '../components/nativeEditor'
+import KonvaEditor from '../components/konvaEditor'
+import dynamic from "next/dynamic";
+
+const NoSSRKonvaEditor = dynamic(() => import("../components/konvaEditor"), {
+  ssr: false,
+});
 
 function Home() {
   return (

@@ -64,7 +64,7 @@ const Circle = () => {
 
 const Canvas = () => {
   return (
-    <svg width="90%" height="1000" style={{ border: "2px solid black", borderRadius: "3px" }}>
+    <svg width="100%" height="1000" style={{ border: "2px solid black", borderRadius: "3px" }}>
       <Circle />
       <Circle />
     </svg>

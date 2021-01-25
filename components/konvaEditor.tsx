@@ -1,16 +1,27 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Stage, Layer, Star, Text } from "react-konva"
 import { useWindowDimensions, useRefDimensions } from './windowSize'
+import useDimensions from 'react-use-dimensions';
 
 
 
 const KonvaEditor = () => {
     const componentRef = useRef()
-    const { width, height } = useRefDimensions(componentRef)
+    const [ref, { width, height }] = useDimensions();
+    // const [width, setWidth] = useState(0)
+    // const [height, setHeight] = useState(0)
+
+    // useEffect(() => {
+    //     const width = (componentRef.current.offsetWidth)
+    //     const height = (componentRef.current.offsetHeight)
+
+    // }, [componentRef])
+
     const [stars, setStars] = React.useState([])
 
     useEffect(() => {
         setStars([...Array(2)].map((_, i) => ({
+            key: i.toString(),
             id: i.toString(),
             x: Math.random() * 800,
             y: Math.random() * 800,
@@ -43,12 +54,12 @@ const KonvaEditor = () => {
 
     console.log(width)
     return (
-        <div ref={componentRef} style={{ width: "100%", height: '100vh' }}>
+        <div ref={ref} style={{ width: "100%", height: '100vh', border: "2px solid black", borderRadius: "3px", marginTop: "16px" }}>
             <Stage width={width} height={height}>
                 <Layer>
                     {stars.map((star) => (
                         <Star
-                            key={star.id}
+                            key={star.key}
                             id={star.id}
                             x={star.x}
                             y={star.y}
