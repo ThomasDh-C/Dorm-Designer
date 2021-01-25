@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import Canvas from '../components/canvas'
+import NativeEditor from '../components/nativeeditor'
+import KonvaEditor from '../components/konvaeditor'
 
 function Home() {
   return (
@@ -11,7 +12,8 @@ function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Canvas />
+        <NativeEditor />
+        <KonvaEditor />
       </main>
 
       <footer className={styles.footer}>

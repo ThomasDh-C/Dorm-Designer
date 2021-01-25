@@ -71,7 +71,7 @@ const Canvas = () => {
   );
 }
 
-const Editor = () => {
+const NativeEditor = () => {
   return (
     <div style={{ width: "100%" }}>
       <h1>Drag Me</h1>
@@ -81,4 +81,4 @@ const Editor = () => {
 };
 
 
-export default Editor
+export default NativeEditor
