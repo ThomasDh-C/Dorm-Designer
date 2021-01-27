@@ -70,7 +70,7 @@ const KonvaEditor = () => {
             selectShapeId(null)
         }
     }
-    console.log(shapes)
+
     // set scale
     useEffect(() => {
         const Xscale = width / backRef?.current?.attrs?.image?.width
