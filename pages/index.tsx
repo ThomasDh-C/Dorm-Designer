@@ -17,8 +17,8 @@ function Home() {
       </Head>
 
       <main className={styles.main}>
-        <NativeEditor />
-        <KonvaEditor />
+        {/* <NativeEditor /> */}
+        <NoSSRKonvaEditor />
       </main>
 
       <footer className={styles.footer}>

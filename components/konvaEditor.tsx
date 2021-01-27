@@ -1,86 +1,129 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Stage, Layer, Star, Text } from "react-konva"
-import { useWindowDimensions, useRefDimensions } from './windowSize'
+import { Stage, Layer, Star, Text, Path, Image } from "react-konva"
 import useDimensions from 'react-use-dimensions';
+import KonvaRectangle from './konvaRectangle'
+import useImage from 'use-image';
+import styled from 'styled-components'
+
+// highest building number is 29 http://rooms.tigerapps.org/static/newrooms/svgz/0029-00.svgz
 
 
+
+const initialShapes = [
+    {
+        x: 99,
+        y: 67,
+        width: 9,
+        height: 4,
+        fill: 'black',
+        id: 0,
+        shape: 'rect',
+        shapescale: 1,
+    },
+    {
+        x: 96,
+        y: 57,
+        width: 5,
+        height: 10,
+        fill: 'grey',
+        id: 1,
+        shape: 'rect',
+        shapescale: 1
+    },
+    {
+        x: 150,
+        y: 150,
+        width: 100,
+        height: 100,
+        fill: 'grey',
+        id: 1,
+        shape: 'circle',
+        shapescale: 1
+    },
+]
+
+
+const FullWidthContainer = styled.div`
+    width: 100%; 
+    height: 90vh; 
+    border: 2px solid black;
+    border-radius: 3px; 
+    margin-top: 16px;
+`
 
 const KonvaEditor = () => {
-    const componentRef = useRef()
+    const [scale, setScale] = React.useState(0.1);
+
+
     const [ref, { width, height }] = useDimensions();
-    // const [width, setWidth] = useState(0)
-    // const [height, setHeight] = useState(0)
+    const [shapes, setShapes] = React.useState(initialShapes);
+    const [selectedShapeId, selectShapeId] = React.useState(null);
 
-    // useEffect(() => {
-    //     const width = (componentRef.current.offsetWidth)
-    //     const height = (componentRef.current.offsetHeight)
+    const backRef = React.useRef(null);
 
-    // }, [componentRef])
+    const [image] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz');
 
-    const [stars, setStars] = React.useState([])
-
+    // deselect when clicked on empty area
+    const checkDeselect = (e) => {
+        const clickedOnEmpty = (e.target === e.target.getStage());
+        if (clickedOnEmpty) {
+            selectShapeId(null)
+        }
+    }
+    console.log(shapes)
+    // set scale
     useEffect(() => {
-        setStars([...Array(2)].map((_, i) => ({
-            key: i.toString(),
-            id: i.toString(),
-            x: Math.random() * 800,
-            y: Math.random() * 800,
-            rotation: Math.random() * 180,
-            isDragging: false
-        })))
-    }, [])
+        const Xscale = width / backRef?.current?.attrs?.image?.width
+        const Yscale = height / backRef?.current?.attrs?.image?.height
+        const minscale = Math.min(Xscale, Yscale)
+        if (!isNaN(minscale)) {
+            const r = minscale / scale
+            setScale(minscale)
+            setShapes(shapes.map((shape) => {
+                return { ...shape, shapescale: shape.shapescale * r, x: shape.x * r, y: shape.y * r, width: shape.width * r, height: shape.height * r }
+            }))
+        }
 
-    const handleDragStart = (e) => {
-        const id = e.target.id()
-        setStars(
-            stars.map((star) => {
-                return {
-                    ...star,
-                    isDragging: star.id === id
-                }
-            })
-        )
-    }
-    const handleDragEnd = (e) => {
-        setStars(
-            stars.map((star) => {
-                return {
-                    ...star,
-                    isDragging: false
-                }
-            })
-        )
-    }
+    }, [width, height, backRef, image])
 
-    console.log(width)
+
     return (
-        <div ref={ref} style={{ width: "100%", height: '100vh', border: "2px solid black", borderRadius: "3px", marginTop: "16px" }}>
-            <Stage width={width} height={height}>
-                <Layer>
-                    {stars.map((star) => (
-                        <Star
-                            key={star.key}
-                            id={star.id}
-                            x={star.x}
-                            y={star.y}
-                            numPoints={5}
-                            innerRadius={20}
-                            outerRadius={40}
-                            fill='black'
-                            opacity={1}
-                            draggable
-                            rotation={star.rotation}
-                            scaleX={star.isDragging ? 1.2 : 1}
-                            scaleY={star.isDragging ? 1.2 : 1}
-                            onDragStart={handleDragStart}
-                            onDragEnd={handleDragEnd}
-                        />
-                    ))}
-                </Layer>
-            </Stage>
-        </div>
+        <>
+            <FullWidthContainer ref={ref}>
+                <Stage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
+                    <Layer>
+                        <Image ref={backRef} image={image} scaleX={scale} scaleY={scale} />
+                    </Layer>
+                    <Layer>
 
+                        {shapes.map((props, i) => {
+                            if (props.shape == 'rect') return (
+                                <KonvaRectangle
+                                    key={props.id}
+                                    shapeProps={props}
+                                    isSelected={props.id === selectedShapeId}
+                                    onSelect={() => { selectShapeId(props.id) }}
+                                    onChange={(newAttrs) => {
+                                        const tempshapes = shapes.slice()
+                                        tempshapes[i] = newAttrs
+                                        setShapes(tempshapes)
+                                    }}
+                                />
+                            )
+                        })}
+
+
+                    </Layer>
+                </Stage>
+            </FullWidthContainer>
+        </>
     )
 }
 
 export default KonvaEditor
+
+    // < Stage width = { width } height = { height } style = {{ position: 'absolute', top: 0 }}>
+    //     <Layer>
+    //         <Image ref={backRef} image={image} scaleX={scale} scaleY={scale} />
+    //     </Layer>
+    //             </Stage >
