@@ -3,7 +3,7 @@ import { Rect, Transformer } from 'react-konva';
 
 
 
-const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
+const KonvaRectangle = ({ key, shapeProps, isSelected, onSelect, onChange }) => {
     const shapeRef = React.useRef(null);
     const trRef = React.useRef(null);
 
@@ -18,6 +18,7 @@ const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
     return (
         <>
             <Rect
+                key={key}
                 onClick={onSelect}
                 onTap={onSelect}
                 ref={shapeRef}
@@ -55,6 +56,7 @@ const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
             {isSelected && (
                 <Transformer
                     ref={trRef}
+                    key={key}
                     boundBoxFunc={(oldBox, newBox) => {
                         // limit resize
                         if (newBox.width < 5 || newBox.height < 5) {

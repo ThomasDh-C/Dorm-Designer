@@ -58,18 +58,19 @@ const KonvaEditor = () => {
     const [ref, { width, height }] = useDimensions();
     const [shapes, setShapes] = React.useState(initialShapes);
     const [selectedShapeId, selectShapeId] = React.useState(null);
-    const backRef = React.useRef(null);
+    const floorplan = React.useRef(null);
     const [scaleToggle, setScaleToggle] = React.useState(false);
 
     const [image] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz');
 
+    // when scaleToggle toggles, entire canvas scale is reset
     const toggleStageScale = () => {
         setScaleToggle((scaleToggle) => !scaleToggle)
     }
 
     // deselect when clicked on empty area
     const checkDeselect = (e) => {
-        const clickedOnEmpty = (e.target === e.target.getStage());
+        const clickedOnEmpty = (e.target.getLayer() === floorplan.current.getLayer()) || (e.target === e.target.getStage())
         if (clickedOnEmpty) {
             selectShapeId(null)
         }
@@ -77,8 +78,8 @@ const KonvaEditor = () => {
 
     // set scale
     useEffect(() => {
-        const Xscale = width / backRef?.current?.attrs?.image?.width
-        const Yscale = height / backRef?.current?.attrs?.image?.height
+        const Xscale = width / floorplan?.current?.attrs?.image?.width
+        const Yscale = height / floorplan?.current?.attrs?.image?.height
         const minscale = Math.min(Xscale, Yscale)
         if (!isNaN(minscale)) {
             const r = minscale / scale
@@ -88,7 +89,7 @@ const KonvaEditor = () => {
             }))
         }
 
-    }, [width, height, backRef, image])
+    }, [width, height, floorplan, image])
 
 
     return (
@@ -97,7 +98,7 @@ const KonvaEditor = () => {
             <FullWidthContainer ref={ref}>
                 <ScrollableStage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect} scaleToggle={scaleToggle}>
                     <Layer>
-                        <Image ref={backRef} image={image} scaleX={scale} scaleY={scale} />
+                        <Image ref={floorplan} image={image} scaleX={scale} scaleY={scale} />
                     </Layer>
                     <Layer>
 
