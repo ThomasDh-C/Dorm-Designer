@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Stage, Layer, Star, Text, Path, Image } from "react-konva"
+import { Layer, Star, Text, Path, Image } from "react-konva"
 import useDimensions from 'react-use-dimensions';
 import KonvaRectangle from './konvaRectangle'
 import useImage from 'use-image';
 import styled from 'styled-components'
+import ScrollableStage from './scrollableStage'
 
 // highest building number is 29 http://rooms.tigerapps.org/static/newrooms/svgz/0029-00.svgz
 
@@ -52,16 +53,19 @@ const FullWidthContainer = styled.div`
 `
 
 const KonvaEditor = () => {
+
     const [scale, setScale] = React.useState(0.1);
-
-
     const [ref, { width, height }] = useDimensions();
     const [shapes, setShapes] = React.useState(initialShapes);
     const [selectedShapeId, selectShapeId] = React.useState(null);
-
     const backRef = React.useRef(null);
+    const [scaleToggle, setScaleToggle] = React.useState(false);
 
     const [image] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz');
+
+    const toggleStageScale = () => {
+        setScaleToggle((scaleToggle) => !scaleToggle)
+    }
 
     // deselect when clicked on empty area
     const checkDeselect = (e) => {
@@ -89,8 +93,9 @@ const KonvaEditor = () => {
 
     return (
         <>
+            <button onClick={toggleStageScale} >Reset Scale</button>
             <FullWidthContainer ref={ref}>
-                <Stage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
+                <ScrollableStage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect} scaleToggle={scaleToggle}>
                     <Layer>
                         <Image ref={backRef} image={image} scaleX={scale} scaleY={scale} />
                     </Layer>
@@ -114,7 +119,7 @@ const KonvaEditor = () => {
 
 
                     </Layer>
-                </Stage>
+                </ScrollableStage>
             </FullWidthContainer>
         </>
     )
