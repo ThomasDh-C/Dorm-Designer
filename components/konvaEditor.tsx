@@ -5,6 +5,8 @@ import KonvaRectangle from './konvaRectangle'
 import useImage from 'use-image';
 import styled from 'styled-components'
 import ScrollableStage from './scrollableStage'
+import rawBedSvg from '../public/dormbed.svg'
+// import Image from '../public/'
 
 // highest building number is 29 http://rooms.tigerapps.org/static/newrooms/svgz/0029-00.svgz
 
@@ -61,7 +63,10 @@ const KonvaEditor = () => {
     const floorplan = React.useRef(null);
     const [scaleToggle, setScaleToggle] = React.useState(false);
 
-    const [image] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz');
+    const [floorplanSvg] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz')
+    const [bedSvg] = useImage(rawBedSvg)
+    console.log(rawBedSvg)
+
 
     // when scaleToggle toggles, entire canvas scale is reset
     const toggleStageScale = () => {
@@ -89,7 +94,7 @@ const KonvaEditor = () => {
             }))
         }
 
-    }, [width, height, floorplan, image])
+    }, [width, height, floorplan, floorplanSvg])
 
 
     return (
@@ -98,7 +103,7 @@ const KonvaEditor = () => {
             <FullWidthContainer ref={ref}>
                 <ScrollableStage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect} scaleToggle={scaleToggle}>
                     <Layer>
-                        <Image ref={floorplan} image={image} scaleX={scale} scaleY={scale} />
+                        <Image ref={floorplan} image={floorplanSvg} scaleX={scale} scaleY={scale} />
                     </Layer>
                     <Layer>
 
@@ -117,7 +122,7 @@ const KonvaEditor = () => {
                                 />
                             )
                         })}
-
+                        <Image image={bedSvg} scaleX={scale} scaleY={scale} />
 
                     </Layer>
                 </ScrollableStage>

@@ -21,8 +21,10 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "components/canvas.jsx"  ],
+    "**/*.tsx",
+    "components/canvas.jsx",
+    "svg.d.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
