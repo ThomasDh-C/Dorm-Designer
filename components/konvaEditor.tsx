@@ -1,18 +1,27 @@
-import React, { useEffect, useRef, useState } from "react"
-import { Layer, Star, Text, Path, Image } from "react-konva"
+import React, { useEffect } from "react"
+import { Layer, Image } from "react-konva"
 import useDimensions from 'react-use-dimensions';
 import KonvaRectangle from './konvaRectangle'
 import useImage from 'use-image';
 import styled from 'styled-components'
 import ScrollableStage from './scrollableStage'
-import rawBedSvg from '../public/dormbed.svg'
-// import Image from '../public/'
+import Bed from './bed'
+
 
 // highest building number is 29 http://rooms.tigerapps.org/static/newrooms/svgz/0029-00.svgz
 
+interface Shape {
+    x: number,
+    y: number,
+    width?: number,
+    height?: number,
+    fill?: string,
+    id: number,
+    shape: string,
+    shapescale: number,
+}
 
-
-const initialShapes = [
+const initialShapes: Array<Shape> = [
     {
         x: 99,
         y: 67,
@@ -34,14 +43,11 @@ const initialShapes = [
         shapescale: 1
     },
     {
-        x: 150,
-        y: 150,
-        width: 100,
-        height: 100,
-        fill: 'grey',
-        id: 1,
-        shape: 'circle',
-        shapescale: 1
+        x: 10,
+        y: 10,
+        id: 2,
+        shape: 'img',
+        shapescale: 1,
     },
 ]
 
@@ -64,9 +70,6 @@ const KonvaEditor = () => {
     const [scaleToggle, setScaleToggle] = React.useState(false);
 
     const [floorplanSvg] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz')
-    const [bedSvg] = useImage(rawBedSvg)
-    console.log(rawBedSvg)
-
 
     // when scaleToggle toggles, entire canvas scale is reset
     const toggleStageScale = () => {
@@ -90,7 +93,7 @@ const KonvaEditor = () => {
             const r = minscale / scale
             setScale(minscale)
             setShapes(shapes.map((shape) => {
-                return { ...shape, shapescale: shape.shapescale * r, x: shape.x * r, y: shape.y * r, width: shape.width * r, height: shape.height * r }
+                return { ...shape, shapescale: shape.shapescale * r, x: shape.x * r, y: shape.y * r, width: shape?.width * r, height: shape?.height * r }
             }))
         }
 
@@ -122,7 +125,7 @@ const KonvaEditor = () => {
                                 />
                             )
                         })}
-                        <Image image={bedSvg} scaleX={scale} scaleY={scale} />
+                        <Bed scale={scale} imagename='dormbed' />
 
                     </Layer>
                 </ScrollableStage>
