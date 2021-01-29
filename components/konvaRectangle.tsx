@@ -18,7 +18,7 @@ const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
     return (
         <>
             <Rect
-                key={shapeProps.id}
+                key={shapeProps.id + "rect"}
                 onClick={onSelect}
                 onTap={onSelect}
                 ref={shapeRef}
@@ -56,7 +56,7 @@ const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
             {isSelected && (
                 <Transformer
                     ref={trRef}
-                    key={notakey}
+                    key={shapeProps.id + "transformer"}
                     boundBoxFunc={(oldBox, newBox) => {
                         // limit resize
                         if (newBox.width < 5 || newBox.height < 5) {
