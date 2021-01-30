@@ -24,6 +24,10 @@ const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle
         // calculate new scale
         const stage = e.target.getStage()
         const oldScale = stage.scaleX()
+
+        // canvas center
+        // console.log(-stage.x() / oldScale + stage.width() / oldScale / 2 + " " + (- stage.y() / oldScale + stage.height() / oldScale / 2))
+
         const mousePointTo = {
             x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
             y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
@@ -40,7 +44,6 @@ const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle
                 -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
         })
     }
-
     return (
         <>
 

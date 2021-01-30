@@ -54,7 +54,7 @@ const PrincetonFurniture = ({ shapeProps, setPttopxscaler, scale, imagename, isS
                     key={shapeProps.id + "transformer"}
                     rotationSnaps={[0, 90, 180, 270]}
                     rotationSnapTolerance={20}
-                    resizeEnabled={shapeProps.resizable}
+                    resizeEnabled={shapeProps.resizable || false}
                 />)
             }
         </>

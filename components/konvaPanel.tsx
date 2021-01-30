@@ -23,10 +23,11 @@ const FullWidthContainer = styled.div`
 const KonvaEditor = ({ activeStep }) => {
     const [ref, { width, height }] = useDimensions()            // get canvas dimensions
     const [scale, setScale] = React.useState(0.1)               // scale down map to fill canvas
-    const [pttopxscaler, setPttopxscaler] = React.useState(1)           // ratio of pixels to ft
+    const [pttopxscaler, setPttopxscaler] = React.useState(1)   // ratio of pixels to ft
     const [shapes, setShapes] = React.useState(initialShapes)   // shapes array
     const [selectedShapeId, selectShapeId] = React.useState(0)  // selected shape
     const [scaleToggle, setScaleToggle] = React.useState(false) // reset scale button
+    const [canvasCoords, setCanvasCoords] = React.useState()    // for when you 
 
     const floorplan = React.useRef(null);
     const [floorplanSvg] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz')
@@ -55,7 +56,7 @@ const KonvaEditor = ({ activeStep }) => {
 
     }, [width, height, floorplan, floorplanSvg])
 
-    
+
 
     useEffect(() => {
         if (activeStep == 0) setShapes(initialShapes)
@@ -69,7 +70,8 @@ const KonvaEditor = ({ activeStep }) => {
         }
     }, [activeStep])
 
-    // , furniture.shapescale: 10 / pixelstoft
+    localStorage.setItem('shapesdata', JSON.stringify(shapes))
+
     return (
         <>
             <button onClick={() => { setScaleToggle(() => !scaleToggle) }} >Reset Zoom</button>
@@ -97,7 +99,7 @@ const KonvaEditor = ({ activeStep }) => {
                                 <PrincetonFurniture
                                     key={props.id}
                                     shapeProps={props}
-                                    
+
                                     setPttopxscaler={setPttopxscaler}
                                     scale={scale * props.shapescale}
                                     imagename={props.imagename}
