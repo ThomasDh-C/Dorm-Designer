@@ -1,14 +1,16 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import NativeEditor from '../components/nativeEditor'
-import KonvaEditor from '../components/konvaEditor'
+import Stepper from '../components/stepper'
 import dynamic from "next/dynamic";
+import React from 'react'
 
-const NoSSRKonvaEditor = dynamic(() => import("../components/konvaEditor"), {
+const NoSSRKonvaPanel = dynamic(() => import("../components/konvaPanel"), {
   ssr: false,
 });
 
 function Home() {
+  const [activeStep, setActiveStep] = React.useState(0);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,8 +19,8 @@ function Home() {
       </Head>
 
       <main className={styles.main}>
-        {/* <NativeEditor /> */}
-        <NoSSRKonvaEditor />
+        <Stepper activeStep={activeStep} setActiveStep={setActiveStep} />
+        <NoSSRKonvaPanel activeStep={activeStep}/>
       </main>
 
       <footer className={styles.footer}>

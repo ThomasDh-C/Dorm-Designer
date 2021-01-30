@@ -1,11 +1,13 @@
-import React from 'react';
-import { Rect, Transformer } from 'react-konva';
+import React from 'react'
+import { Image, Transformer } from "react-konva"
+import useImage from 'use-image';
 
-
-
-const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
+const PrincetonFurniture = ({ shapeProps, setPttopxscaler, scale, imagename, isSelected, onSelect, onChange }) => {
     const shapeRef = React.useRef(null);
     const trRef = React.useRef(null);
+
+    const path = `/${imagename}.svg`
+    const [bedSvg] = useImage(path)
 
     React.useEffect(() => {
         if (isSelected) {
@@ -14,14 +16,17 @@ const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
             trRef.current.getLayer().batchDraw();
         }
     }, [isSelected]);
-
     return (
+
         <>
-            <Rect
+            <Image
                 key={shapeProps.id + "rect"}
+                ref={shapeRef}
+                image={bedSvg}
+                scaleX={scale}
+                scaleY={scale}
                 onClick={onSelect}
                 onTap={onSelect}
-                ref={shapeRef}
                 {...shapeProps}
                 draggable
                 onDragEnd={(e) => {
@@ -32,25 +37,14 @@ const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
                     })
                 }}
                 onTransformEnd={() => {
-                    // transformer is changing scale of the node
-                    // and NOT its width or height
-                    // but in the store we have only width and height
-                    // to match the data better we will reset scale on transform end
                     const node = shapeRef.current
-                    const scaleX = node.scaleX()
-                    const scaleY = node.scaleY()
-
-                    // we will reset it back
-                    node.scaleX(1)
-                    node.scaleY(1)
+                    if (shapeProps.imagename === 'twentyfoot')
+                        setPttopxscaler(node.scaleX() / scale) // scale is mapscale as initial scaling is 1
                     onChange({
                         ...shapeProps,
                         x: node.x(),
                         y: node.y(),
-                        rotation: node.rotation(),
-                        // set minimal value
-                        width: Math.max(5, node.width() * scaleX),
-                        height: Math.max(node.height() * scaleY),
+                        rotation: node.rotation()
                     })
                 }}
             />
@@ -60,18 +54,12 @@ const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
                     key={shapeProps.id + "transformer"}
                     rotationSnaps={[0, 90, 180, 270]}
                     rotationSnapTolerance={20}
-                    boundBoxFunc={(oldBox, newBox) => {
-                        // limit resize
-                        if (newBox.width < 5 || newBox.height < 5) {
-                            return oldBox
-                        }
-                        return newBox
-                    }}
+                    resizeEnabled={shapeProps.resizable}
                 />)
             }
         </>
     )
+
 }
 
-
-export default KonvaRectangle
+export default PrincetonFurniture

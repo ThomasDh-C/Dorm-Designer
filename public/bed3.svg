@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="509" height="236" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" clip-rule="evenodd" version="1.1" viewBox="0 0 509 236" xml:space="preserve">
+  <defs/>
+  <path fill="none" stroke="#000" stroke-width="1.44" d="M25 235h457M482 235c6 0 11-5 12-10M494 215V17M494 11c-1-6-6-10-12-10"/>
+  <path fill="none" stroke="#000" stroke-width=".72" d="M14 13h2M25 4c-5 0-9 4-9 9M25 4V1"/>
+  <path fill="none" stroke="#000" stroke-width="1.44" d="M25 1c-4 0-9 3-11 7"/>
+  <path fill="none" stroke="#000" stroke-width=".72" d="M482 4V1"/>
+  <path fill="none" stroke="#000" stroke-width="1.44" d="M482 1H25"/>
+  <path fill="none" stroke="#000" stroke-width=".72" d="M25 4h457M491 13h3M491 13c0-5-4-9-9-9M491 13v210h3M482 232v3M482 232c5 0 9-4 9-9M482 232H25v3M16 223h-2"/>
+  <path fill="none" stroke="#000" stroke-width="1.44" d="M14 227c2 5 7 8 11 8"/>
+  <path fill="none" stroke="#000" stroke-width=".72" d="M16 223c0 5 4 9 9 9M16 223V13"/>
+  <path fill="none" stroke="#000" stroke-width="1.44" d="M13 17v198M14 229v-3M14 229h1M493 229h1M494 4h-4M17 4h-3v6M10 17v198M5 215V17M14 215H1v14h13M14 4H1v13h13M494 4v13M494 215v14M503 17v198M494 215h5V17M503 215h5-14M494 229h14v-14M494 17h14M508 17V4h-14"/>
+  <path fill="none" stroke="#000" stroke-width=".72" d="M14 13v4M14 215v8M14 10v3M14 223v3"/>
+</svg>
