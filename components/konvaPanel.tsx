@@ -14,7 +14,7 @@ import { initialShapes, standardFurniture } from './shapes'
 
 const FullWidthContainer = styled.div`
     width: 100%; 
-    height: 90vh; 
+    height: 60vh; 
     border: 2px solid black;
     border-radius: 3px; 
     margin-top: 16px;
@@ -27,7 +27,7 @@ const KonvaEditor = ({ activeStep }) => {
     const [shapes, setShapes] = React.useState(initialShapes)   // shapes array
     const [selectedShapeId, selectShapeId] = React.useState(0)  // selected shape
     const [scaleToggle, setScaleToggle] = React.useState(false) // reset scale button
-    const [canvasCoords, setCanvasCoords] = React.useState()    // for when you 
+    const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 })    // for when you 
 
     const floorplan = React.useRef(null);
     const [floorplanSvg] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz')
@@ -61,7 +61,7 @@ const KonvaEditor = ({ activeStep }) => {
     useEffect(() => {
         if (activeStep == 0) setShapes(initialShapes)
         if (activeStep == 1) {
-            setShapes(standardFurniture.map(furniture => {
+            setShapes(standardFurniture(canvasCoords.x, canvasCoords.y).map(furniture => {
                 return ({
                     ...furniture,
                     shapescale: pttopxscaler / 10,
@@ -76,7 +76,7 @@ const KonvaEditor = ({ activeStep }) => {
         <>
             <button onClick={() => { setScaleToggle(() => !scaleToggle) }} >Reset Zoom</button>
             <FullWidthContainer ref={ref}>
-                <ScrollableStage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect} scaleToggle={scaleToggle}>
+                <ScrollableStage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect} scaleToggle={scaleToggle} setCanvasCoords={setCanvasCoords}>
                     <Layer>
                         <Image ref={floorplan} image={floorplanSvg} scaleX={scale} scaleY={scale} />
                     </Layer>

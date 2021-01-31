@@ -1,12 +1,13 @@
 import React from 'react'
 import { Stage } from "react-konva"
 
-const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle, children }) => {
+const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle, setCanvasCoords, children }) => {
     const [stagePosScale, setPosScale] = React.useState({
         stageScale: 1,
         stageX: 0,
         stageY: 0
     })
+    const stageref = React.useRef()
 
     React.useEffect(() => {
         setPosScale({
@@ -19,14 +20,13 @@ const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle
 
     const handleWheel = (e) => {
         e.evt.preventDefault()
-        const scaleBy = 1.2
-
+        let scaleBy = 1.2
+        if (e.evt.ctrlKey) scaleBy = 1 / 1.05
         // calculate new scale
         const stage = e.target.getStage()
         const oldScale = stage.scaleX()
 
-        // canvas center
-        // console.log(-stage.x() / oldScale + stage.width() / oldScale / 2 + " " + (- stage.y() / oldScale + stage.height() / oldScale / 2))
+        
 
         const mousePointTo = {
             x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
@@ -43,11 +43,20 @@ const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle
             stageY:
                 -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
         })
+
+        // canvas center
+        setCanvasCoords({
+            x: -stage.x() / newScale + stage.width() / newScale / 2,
+            y: - stage.y() / newScale + stage.height() / newScale / 2
+        })
     }
+
+
     return (
         <>
 
             <Stage
+                ref={stageref}
                 width={width}
                 height={height}
                 onWheel={handleWheel}

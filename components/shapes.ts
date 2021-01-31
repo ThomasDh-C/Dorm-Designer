@@ -24,57 +24,62 @@ export const initialShapes: Array<Shape> = [
     },
 ]
 
-export const standardFurniture: Array<Shape> = [
-    {
-        id: 0,
-        shape: 'img',
-        imagename: 'bed',
-        x: 10,
-        y: 10,
-        rotation: 90,
-    },
-    {
-        id: 1,
-        shape: 'img',
-        imagename: 'bookshelf',
-        x: 20,
-        y: 10,
-        rotation: 90,
-    },
-    {
-        id: 2,
-        shape: 'img',
-        imagename: 'chair',
-        x: 30,
-        y: 10,
-        rotation: 90,
-    },
-    {
-        id: 3,
-        shape: 'img',
-        imagename: 'desk',
-        x: 30,
-        y: 10,
-        rotation: 90,
-    },
-    {
-        id: 4,
-        shape: 'img',
-        imagename: 'dresser',
-        x: 40,
-        y: 10,
-        rotation: 90,
-    },
-    {
-        id: 5,
-        shape: 'img',
-        imagename: 'wardrobe',
-        x: 50,
-        y: 10,
-        rotation: 90,
-    },
+export const standardFurniture = (x: number, y: number): Array<Shape> => {
+    return (
+        [
+            {
+                id: 0,
+                shape: 'img',
+                imagename: 'bed',
+                x: x,
+                y: y,
+                rotation: 90,
+            },
+            {
+                id: 1,
+                shape: 'img',
+                imagename: 'bookshelf',
+                x: x,
+                y: y,
+                rotation: 90,
+            },
+            {
+                id: 2,
+                shape: 'img',
+                imagename: 'chair',
+                x: x,
+                y: y,
+                rotation: 90,
+            },
+            {
+                id: 3,
+                shape: 'img',
+                imagename: 'desk',
+                x: x,
+                y: y,
+                rotation: 90,
+            },
+            {
+                id: 4,
+                shape: 'img',
+                imagename: 'dresser',
+                x: x,
+                y: y,
+                rotation: 90,
+            },
+            {
+                id: 5,
+                shape: 'img',
+                imagename: 'wardrobe',
+                x: x,
+                y: y,
+                rotation: 90,
+            },
 
-]
+        ]
+    )
+}
+
 // {
 //     x: 99,
 //     y: 67,
