@@ -26,7 +26,7 @@ const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle
         const stage = e.target.getStage()
         const oldScale = stage.scaleX()
 
-        
+
 
         const mousePointTo = {
             x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
@@ -59,13 +59,24 @@ const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle
                 ref={stageref}
                 width={width}
                 height={height}
-                onWheel={handleWheel}
-                scaleX={stagePosScale.stageScale}
-                scaleY={stagePosScale.stageScale}
                 x={stagePosScale.stageX}
                 y={stagePosScale.stageY}
+                scaleX={stagePosScale.stageScale}
+                scaleY={stagePosScale.stageScale}
+
+                draggable
+                onWheel={handleWheel}
                 onMouseDown={onMouseDown}
                 onTouchStart={onTouchStart}
+                onDragEnd={e => {
+
+                    const stage = e.target.getStage()
+                    setPosScale({
+                        ...stagePosScale,
+                        stageX: stage.x(),
+                        stageY: stage.y(),
+                    })
+                }}
             >
                 {children}
             </Stage>
