@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import ScrollableStage from './scrollableStage'
 import PrincetonFurniture from './princetonFurniture'
 import { initialShapes, standardFurniture } from './shapes'
+import ControlPanel from './controlPanel'
 
 
 // highest building number is 29 http://rooms.tigerapps.org/static/newrooms/svgz/0029-00.svgz
@@ -15,9 +16,10 @@ import { initialShapes, standardFurniture } from './shapes'
 const FullWidthContainer = styled.div`
     width: 100%; 
     height: 60vh; 
+    overflow: hidden;
     border: 2px solid black;
     border-radius: 3px; 
-    margin-top: 16px;
+    margin-top: 4px;
 `
 
 const KonvaEditor = ({ activeStep }) => {
@@ -26,7 +28,11 @@ const KonvaEditor = ({ activeStep }) => {
     const [pttopxscaler, setPttopxscaler] = React.useState(1)   // ratio of pixels to ft
     const [shapes, setShapes] = React.useState(initialShapes)   // shapes array
     const [selectedShapeId, selectShapeId] = React.useState(0)  // selected shape
-    const [scaleToggle, setScaleToggle] = React.useState(false) // reset scale button
+    const [stagePosScale, setPosScale] = React.useState({
+        stageScale: 1,
+        stageX: 0,
+        stageY: 0
+    })
     const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 })    // for when you 
 
     const floorplan = React.useRef(null);
@@ -75,9 +81,9 @@ const KonvaEditor = ({ activeStep }) => {
 
     return (
         <>
-            <button onClick={() => { setScaleToggle(() => !scaleToggle) }} style={{ marginTop: '16px' }}>Reset Zoom</button>
+            <ControlPanel stagePosScale={stagePosScale} setPosScale={setPosScale} />
             <FullWidthContainer ref={ref}>
-                <ScrollableStage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect} scaleToggle={scaleToggle} setCanvasCoords={setCanvasCoords}>
+                <ScrollableStage width={width} height={height} stagePosScale={stagePosScale} setPosScale={setPosScale} onMouseDown={checkDeselect} onTouchStart={checkDeselect} setCanvasCoords={setCanvasCoords}>
                     <Layer>
                         <Image ref={floorplan} image={floorplanSvg} scaleX={scale} scaleY={scale} />
                     </Layer>

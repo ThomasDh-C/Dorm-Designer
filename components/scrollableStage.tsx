@@ -1,21 +1,10 @@
 import React from 'react'
 import { Stage } from "react-konva"
 
-const ScrollableStage = ({ width, height, onMouseDown, onTouchStart, scaleToggle, setCanvasCoords, children }) => {
-    const [stagePosScale, setPosScale] = React.useState({
-        stageScale: 1,
-        stageX: 0,
-        stageY: 0
-    })
+const ScrollableStage = ({ width, height, stagePosScale, setPosScale, onMouseDown, onTouchStart, setCanvasCoords, children }) => {
     const stageref = React.useRef()
 
-    React.useEffect(() => {
-        setPosScale({
-            stageScale: 1,
-            stageX: 0,
-            stageY: 0
-        })
-    }, [scaleToggle])
+
 
 
     const handleWheel = (e) => {
