@@ -1,5 +1,5 @@
 export interface Shape {
-    id: number,
+    id?: number,
     shape: string,
     imagename?: string,
     x: number,
@@ -28,7 +28,6 @@ export const standardFurniture = (x: number, y: number): Array<Shape> => {
     return (
         [
             {
-                id: 0,
                 shape: 'img',
                 imagename: 'bed',
                 x: x,
@@ -36,7 +35,6 @@ export const standardFurniture = (x: number, y: number): Array<Shape> => {
                 rotation: 90,
             },
             {
-                id: 1,
                 shape: 'img',
                 imagename: 'bookshelf',
                 x: x,
@@ -44,7 +42,6 @@ export const standardFurniture = (x: number, y: number): Array<Shape> => {
                 rotation: 90,
             },
             {
-                id: 2,
                 shape: 'img',
                 imagename: 'chair',
                 x: x,
@@ -52,7 +49,6 @@ export const standardFurniture = (x: number, y: number): Array<Shape> => {
                 rotation: 90,
             },
             {
-                id: 3,
                 shape: 'img',
                 imagename: 'desk',
                 x: x,
@@ -60,7 +56,6 @@ export const standardFurniture = (x: number, y: number): Array<Shape> => {
                 rotation: 90,
             },
             {
-                id: 4,
                 shape: 'img',
                 imagename: 'dresser',
                 x: x,
@@ -68,7 +63,6 @@ export const standardFurniture = (x: number, y: number): Array<Shape> => {
                 rotation: 90,
             },
             {
-                id: 5,
                 shape: 'img',
                 imagename: 'wardrobe',
                 x: x,

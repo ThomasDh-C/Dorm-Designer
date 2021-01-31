@@ -61,10 +61,11 @@ const KonvaEditor = ({ activeStep }) => {
     useEffect(() => {
         if (activeStep == 0) setShapes(initialShapes)
         if (activeStep == 1) {
-            setShapes(standardFurniture(canvasCoords.x, canvasCoords.y).map(furniture => {
+            setShapes(standardFurniture(canvasCoords.x, canvasCoords.y).map((item, id) => {
                 return ({
-                    ...furniture,
+                    id: id,
                     shapescale: pttopxscaler / 10,
+                    ...item,
                 })
             }))
         }
@@ -74,7 +75,7 @@ const KonvaEditor = ({ activeStep }) => {
 
     return (
         <>
-            <button onClick={() => { setScaleToggle(() => !scaleToggle) }} >Reset Zoom</button>
+            <button onClick={() => { setScaleToggle(() => !scaleToggle) }} style={{ marginTop: '16px' }}>Reset Zoom</button>
             <FullWidthContainer ref={ref}>
                 <ScrollableStage width={width} height={height} onMouseDown={checkDeselect} onTouchStart={checkDeselect} scaleToggle={scaleToggle} setCanvasCoords={setCanvasCoords}>
                     <Layer>
