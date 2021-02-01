@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import Stepper from '../components/stepper'
+import ProgressStepper from '../components/progressStepper'
 import dynamic from "next/dynamic";
 import React from 'react'
 
@@ -19,7 +19,7 @@ function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Stepper activeStep={activeStep} setActiveStep={setActiveStep} />
+        <ProgressStepper activeStep={activeStep} setActiveStep={setActiveStep} />
         <NoSSRKonvaPanel activeStep={activeStep} />
       </main>
 

@@ -63,7 +63,6 @@ const KonvaEditor = ({ activeStep }) => {
     }, [width, height, floorplan, floorplanSvg])
 
 
-
     useEffect(() => {
         if (activeStep == 0) setShapes(initialShapes)
         if (activeStep == 1) {
@@ -71,11 +70,14 @@ const KonvaEditor = ({ activeStep }) => {
                 return ({
                     id: id,
                     shapescale: pttopxscaler / 10,
+                    relativex: item.x / floorplan?.current.width(),
+                    relativey: item.y / floorplan?.current.height(),
                     ...item,
                 })
             }))
         }
     }, [activeStep])
+
 
     localStorage.setItem('shapesdata', JSON.stringify(shapes))
 

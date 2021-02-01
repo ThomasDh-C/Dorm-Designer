@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 import { MdPanTool, MdRotateRight } from 'react-icons/md'
+import { Button } from 'antd'
 
 const Row = styled.div`
     width: 100%;
@@ -22,7 +23,7 @@ const Halfwidth = styled.div`
 `
 
 
-const CustomButton = styled.button`
+const CustomButton = styled(Button)`
     padding: 0 16px 0 16px;
 `
 

@@ -1,7 +1,6 @@
 .container {
-  min-height: 100vh;
   padding: 0 0.5rem;
-  margin: 48px;
+  margin: 48px 48px 0 48px;
 }
 
 .main {
