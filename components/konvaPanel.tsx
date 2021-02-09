@@ -22,7 +22,7 @@ const FullWidthContainer = styled.div`
     margin-top: 4px;
 `
 
-const KonvaEditor = ({ activeStep }) => {
+const KonvaEditor = ({ activeStep, planUrl }) => {
     const [ref, { width, height }] = useDimensions()            // get canvas dimensions
     const [scale, setScale] = React.useState(0.1)               // scale down map to fill canvas
     const [pttopxscaler, setPttopxscaler] = React.useState(1)   // ratio of pixels to ft
@@ -36,7 +36,7 @@ const KonvaEditor = ({ activeStep }) => {
     const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 })    // for when you 
 
     const floorplan = React.useRef(null);
-    const [floorplanSvg] = useImage('http://rooms.tigerapps.org/static/newrooms/svgz/0010-02.svgz')
+    const [floorplanSvg] = useImage(planUrl)
 
     // deselect when clicked on empty area
     const checkDeselect = (e) => {
