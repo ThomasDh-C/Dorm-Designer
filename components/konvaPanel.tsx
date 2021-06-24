@@ -10,8 +10,6 @@ import { initialShapes, standardFurniture } from './shapes'
 import ControlPanel from './controlPanel'
 
 
-// highest building number is 29 http://rooms.tigerapps.org/static/newrooms/svgz/0029-00.svgz
-
 
 const FullWidthContainer = styled.div`
     width: 100%; 
@@ -22,7 +20,7 @@ const FullWidthContainer = styled.div`
     margin-top: 4px;
 `
 
-const KonvaEditor = ({ activeStep, planUrl }) => {
+const KonvaEditor = ({ activeStep, file }) => {
     const [ref, { width, height }] = useDimensions()            // get canvas dimensions
     const [scale, setScale] = React.useState(0.1)               // scale down map to fill canvas
     const [pttopxscaler, setPttopxscaler] = React.useState(1)   // ratio of pixels to ft
@@ -32,11 +30,12 @@ const KonvaEditor = ({ activeStep, planUrl }) => {
         stageScale: 1,
         stageX: 0,
         stageY: 0
-    })
-    const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 })    // for when you 
+    }) // scale of stage and stage x and y position ... updated on stage scroll or drag events
+    const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 }) // centre of canvas ... updated on same events as above
 
     const floorplan = React.useRef(null);
-    const [floorplanSvg] = useImage(planUrl)
+    const [floorplanSvg] = useImage(file)
+
 
     // deselect when clicked on empty area
     const checkDeselect = (e) => {
@@ -46,7 +45,9 @@ const KonvaEditor = ({ activeStep, planUrl }) => {
         }
     }
 
-    // set scale (floorplan to windowsize)
+    // scale is dim_floorplan/ dim_container
+    // update position of all shapes to be same relative to floorplan
+    // for some reason also have to also scale drawn objects?
     useEffect(() => {
         const Xscale = width / floorplan?.current?.attrs?.image?.width
         const Yscale = height / floorplan?.current?.attrs?.image?.height
@@ -62,10 +63,12 @@ const KonvaEditor = ({ activeStep, planUrl }) => {
 
     }, [width, height, floorplan, floorplanSvg])
 
-
+    // Step 0: scale the scale setter img to the right size
+    // Step 1: upload all standard shapes and save relative coords for local storage
     useEffect(() => {
         if (activeStep == 0) setShapes(initialShapes)
         if (activeStep == 1) {
+            // standardFurniture returns a array of shapes if passed x and y coords (centre of screen)
             setShapes(standardFurniture(canvasCoords.x, canvasCoords.y).map((item, id) => {
                 return ({
                     id: id,
@@ -78,7 +81,7 @@ const KonvaEditor = ({ activeStep, planUrl }) => {
         }
     }, [activeStep])
 
-
+    
     localStorage.setItem('shapesdata', JSON.stringify(shapes))
 
     return (
@@ -87,7 +90,7 @@ const KonvaEditor = ({ activeStep, planUrl }) => {
             <FullWidthContainer ref={ref}>
                 <ScrollableStage width={width} height={height} stagePosScale={stagePosScale} setPosScale={setPosScale} onMouseDown={checkDeselect} onTouchStart={checkDeselect} setCanvasCoords={setCanvasCoords}>
                     <Layer>
-                        <Image ref={floorplan} image={floorplanSvg} scaleX={scale} scaleY={scale} />
+                        <Image ref={floorplan} image={floorplanSvg} scaleX={scale} scaleY={scale}/>
                     </Layer>
                     <Layer>
                         {shapes.map((props, i) => {
