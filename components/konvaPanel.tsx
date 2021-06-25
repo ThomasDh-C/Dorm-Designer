@@ -31,19 +31,9 @@ const KonvaEditor = ({ activeStep, file }) => {
         stageY: 0
     }) // scale of stage and stage x and y position ... updated on stage scroll or drag events
     const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 }) // centre of canvas ... updated on same events as above
-    console.log(pttopxscaler)
 
     const floorplan = React.useRef(null);
-    const test = `/0014-01.svg`
-    // file
     const [floorplanSvg] = useImage(file)
-    // const [floorplanSvg,setFloorplanSVG] = React.useState(undefined)
-    // React.useEffect(()=>{
-    //     var img = document.createElement('img')
-    //     img.src = file
-    //     setFloorplanSVG(img)
-    // },[file])
-
 
     // deselect when clicked on empty area
     const checkDeselect = (e) => {

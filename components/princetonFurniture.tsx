@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, Transformer } from "react-konva"
 import useImage from 'use-image';
 import svgToMiniDataURI from 'mini-svg-data-uri'
+import svgdata from './svgdata.json'
 
 const parse = async (content) => {
     const regex = /^\<\?xml.*>/
@@ -15,22 +16,11 @@ const PrincetonFurniture = ({ shapeProps, setPttopxscaler, mapScale, scale, imag
     const trRef = React.useRef(null);
     const path = `/${imagename}.svg`
     const [imageSvg] = useImage(path)
-    // const [imageSvg,setImage] = React.useState(undefined)
-    // React.useEffect(()=>{
-    //     fetch(path)
-    //         .then((res)=> res.text())
-    //         .then((data) => parse(data))
-    //         .then((url) => { 
-    //             var img = document.createElement('img')
-    //             img.src = url
-    //             setImage(img)
-    //         })
-    // },[imagename])
+    // const [imageSvg] = useImage(svgdata[imagename])
     
     
     
     React.useEffect(() => {
-        // console.log(mapScale/ shapeRef.current.scaleX())
         if (isSelected) {
             // we need to attach transformer manually
             trRef.current.nodes([shapeRef.current]);

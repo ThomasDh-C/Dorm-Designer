@@ -13,9 +13,8 @@ margin-right: auto;
 const parse = async (content) => {
   const regex = /^\<\?xml.*>/
   let n = 1
-//   .replace('\n', '    ')
-  const cleaned_svg_string = content.replace(regex, '').replace(/pt/g, match => n++ < 3 ? "|" : match)
-  return svgToMiniDataURI(cleaned_svg_string)
+  const cleaned_svg_string = content.replace(/pt/g, match => n++ < 3 ? "|" : match)
+  return svgToMiniDataURI(content)
 }
 
 const UploadFloorPlan = (props) => { 
