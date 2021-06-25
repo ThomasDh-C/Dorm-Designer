@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import ProgressStepper from '../components/progressStepper'
-import PlanUrl from '../components/planUrl'
 import UploadFloorPlan from '../components/uploadFloorPlan'
 import dynamic from "next/dynamic";
 import React from 'react'
@@ -12,8 +11,7 @@ const NoSSRKonvaPanel = dynamic(() => import("../components/konvaPanel"), {
 
 function Home() {
   const [activeStep, setActiveStep] = React.useState(0)
-  const [file,setFile] = React.useState()
-  console.log(file)
+  const [file,setFile] = React.useState('')
 
   const mainstyle: React.CSSProperties = {
     visibility: file !== '' ? 'visible' : 'hidden'
