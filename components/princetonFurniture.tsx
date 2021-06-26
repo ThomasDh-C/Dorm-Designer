@@ -1,14 +1,25 @@
 import React from 'react'
 import { Image, Transformer } from "react-konva"
 import useImage from 'use-image';
+import svgToMiniDataURI from 'mini-svg-data-uri'
+import svgdata from './svgdata.json'
 
-const PrincetonFurniture = ({ shapeProps, setPttopxscaler, scale, imagename, isSelected, onSelect, onChange }) => {
+const parse = async (content) => {
+    const regex = /^\<\?xml.*>/
+    let n = 1
+    const cleaned_svg_string = content.replace(regex, '').replace('\n', '    ')
+    return svgToMiniDataURI(cleaned_svg_string)
+}
+
+const PrincetonFurniture = ({ shapeProps, setPttopxscaler, mapScale, scale, imagename, isSelected, onSelect, onChange }) => {
     const shapeRef = React.useRef(null);
     const trRef = React.useRef(null);
-
     const path = `/${imagename}.svg`
-    const [bedSvg] = useImage(path)
-
+    const [imageSvg] = useImage(path)
+    // const [imageSvg] = useImage(svgdata[imagename])
+    
+    
+    
     React.useEffect(() => {
         if (isSelected) {
             // we need to attach transformer manually
@@ -16,13 +27,14 @@ const PrincetonFurniture = ({ shapeProps, setPttopxscaler, scale, imagename, isS
             trRef.current.getLayer().batchDraw();
         }
     }, [isSelected]);
-    return (
 
-        <>
-            <Image
+    
+    return (
+        <> 
+        <Image
                 key={shapeProps.id + "rect"}
                 ref={shapeRef}
-                image={bedSvg}
+                image={imageSvg}
                 scaleX={scale}
                 scaleY={scale}
                 onClick={onSelect}
@@ -38,8 +50,8 @@ const PrincetonFurniture = ({ shapeProps, setPttopxscaler, scale, imagename, isS
                 }}
                 onTransformEnd={() => {
                     const node = shapeRef.current
-                    if (shapeProps.imagename === 'twentyfoot')
-                        setPttopxscaler(node.scaleX() / scale) // scale is mapscale as initial scaling is 1
+                    if (shapeProps.imagename === 'thirtytwofoot')
+                        setPttopxscaler(node.scaleX() / mapScale) // scaleX = mapScale * props.shapescale ... so rearrange
                     onChange({
                         ...shapeProps,
                         x: node.x(),
@@ -58,7 +70,9 @@ const PrincetonFurniture = ({ shapeProps, setPttopxscaler, scale, imagename, isS
                 />)
             }
         </>
-    )
+        )
+        
+    
 
 }
 

@@ -16,7 +16,7 @@ export const initialShapes: Array<Shape> = [
     {
         id: 0,
         shape: 'img',
-        imagename: 'twentyfoot',
+        imagename: 'thirtytwofoot',
         x: 10,
         y: 10,
         shapescale: 1,

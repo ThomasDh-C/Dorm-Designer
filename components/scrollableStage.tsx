@@ -4,18 +4,14 @@ import { Stage } from "react-konva"
 const ScrollableStage = ({ width, height, stagePosScale, setPosScale, onMouseDown, onTouchStart, setCanvasCoords, children }) => {
     const stageref = React.useRef()
 
-
-
-
     const handleWheel = (e) => {
         e.evt.preventDefault()
         let scaleBy = 1.2
         if (e.evt.ctrlKey) scaleBy = 1 / 1.05
+        
         // calculate new scale
         const stage = e.target.getStage()
         const oldScale = stage.scaleX()
-
-
 
         const mousePointTo = {
             x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
