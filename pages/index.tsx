@@ -2,7 +2,6 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import styled from 'styled-components'
 import { device } from '../components/cssVars';
-import dynamic from "next/dynamic";
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import CreateNewFile from '../components/molecules/createNewFile';

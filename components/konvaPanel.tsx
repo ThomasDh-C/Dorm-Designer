@@ -61,30 +61,9 @@ const KonvaEditor = ({ activeStep, file }) => {
 
     }, [width, height, floorplan, floorplanSvg])
 
-    // Step 0: scale the scale setter img to the right size
-    // Step 1: upload all standard shapes and save relative coords for local storage
-    useEffect(() => {
-        if (activeStep == 0) setShapes(initialShapes)
-        if (activeStep == 1) {
-            // standardFurniture returns a array of shapes if passed x and y coords (centre of screen)
-            setShapes(standardFurniture(canvasCoords.x, canvasCoords.y).map((item, id) => {
-                return ({
-                    id: id,
-                    shapescale: pttopxscaler/16,
-                    relativex: item.x / floorplan?.current.width(),
-                    relativey: item.y / floorplan?.current.height(),
-                    ...item,
-                })
-            }))
-        }
-    }, [activeStep])
-
-    
-    localStorage.setItem('shapesdata', JSON.stringify(shapes))
-
     return (
         <>
-            <ControlPanel stagePosScale={stagePosScale} setPosScale={setPosScale} />
+            {/* <ControlPanel stagePosScale={stagePosScale} setPosScale={setPosScale} /> */}
             <FullWidthContainer ref={ref}>
                 <ScrollableStage width={width} height={height} stagePosScale={stagePosScale} setPosScale={setPosScale} onMouseDown={checkDeselect} onTouchStart={checkDeselect} setCanvasCoords={setCanvasCoords}>
                     <Layer>

@@ -12,6 +12,15 @@ export interface Shape {
     fill?: string,
 }
 
+export interface MapFile {
+    floorplan: string, 
+    name: string, 
+    id: string, 
+    scale: number,
+    occupancy: number,
+    shape?: Array<Shape>,
+}
+
 export const initialShapes: Array<Shape> = [
     {
         id: 0,

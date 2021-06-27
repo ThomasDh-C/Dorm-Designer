@@ -1,6 +1,6 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import {colors} from "../cssVars"
 import UploadFloorPlan from '../atoms/uploadFloorPlan/uploadFloorPlan'
 import { Formik, Form, Field, ErrorMessage } from "formik"
 
@@ -47,6 +47,8 @@ const Child = styled.div`
 `
 
 const CreateNewFile = ({currFile, setFile}) => { 
+    const router = useRouter()
+
     const validateInput = (values) => {
         let errors = {};
         if (!values?.name) {
@@ -69,17 +71,30 @@ const CreateNewFile = ({currFile, setFile}) => {
 
     const handleInput = (values, { setSubmitting }) => {
         if (currFile.floorplan) {
-            setFile((oldFile) => { return {...oldFile, ...values} })
+            let temp = {}
+            Object.keys(values).forEach(function(key) {
+                if(key=='name'){
+                    temp[key] = values[key]
+                }
+                else{
+                    temp[key] = eval(values[key])
+                }
+              })
+            const newFile = {...currFile, ...temp}
+            setFile(newFile)
             setSubmitting(false)
+            console.log(newFile)
+            localStorage.setItem('currshape', JSON.stringify(newFile))
+            router.push('./'+ currFile.id)
         }
     }
-    console.log(currFile)
+    // console.log(currFile)
 
     return (
         <FlexSection>
             <UploadFloorPlan setFile={setFile}/>
             <Formik
-                // initialValues={{ name: "Insert name here", scale: 1/16, occupancy: 4 }}
+                initialValues={{name: "", scale: 1/16, occupancy: 4 }}
                 validate={validateInput}
                 onSubmit={handleInput}
                 >
