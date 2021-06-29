@@ -1,15 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import svgToMiniDataURI from 'mini-svg-data-uri'
-import {colors} from "../../cssVars"
+import BlueButton from './blueButton'
 
-const Button = styled.button`
+const Button = styled(BlueButton)`
     width: 100%;
     height: 100%;
-    background-color: ${colors.lightBlue};
-    border: none;
-    border-radius: 5px;
-    padding: 8px;
+    max-height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -30,12 +27,19 @@ const SmallFloorplan = styled.div`
     padding-right: 8px;
 `
 
+const SmallImage = styled.img`
+    max-width: 65%;
+    width: auto;
+    max-height: 80%;
+`
+
 const parse = async (content) => {
   return svgToMiniDataURI(content)
 }
 
 const UploadFloorPlan = ({setFile}) => { 
     const hiddenFileInput = React.useRef(null)
+    const [localFile, setLocalFile] = React.useState<string | undefined>('')
     let fileReader;
 
     // Programatically click the hidden file input element
@@ -49,6 +53,7 @@ const UploadFloorPlan = ({setFile}) => {
         const content = fileReader.result;
         parse(content)
             .then(parsedData => {
+                setLocalFile(parsedData)
                 setFile((oldFile)=> {
                     return {...oldFile, floorplan: parsedData}
                 })
@@ -67,9 +72,18 @@ const UploadFloorPlan = ({setFile}) => {
 
     return (
         <SmallFloorplan>
-            <Button type="button" onClick={handleClick}>
-                <NoSpaceP marginBottom='8px'>Upload floor plan</NoSpaceP>
-                <UploadIcon className="fas fa-file-upload"/>
+            <Button onClick={handleClick}>
+                {localFile ? 
+                <>
+                    <NoSpaceP marginBottom='8px'>Replace floor plan</NoSpaceP>
+                    <SmallImage src={localFile} />
+                </>
+                :
+                <>
+                    <NoSpaceP marginBottom='8px'>Upload floor plan</NoSpaceP>
+                    <UploadIcon className="fas fa-file-upload"/>
+                </>
+                }
             </Button>
             {/* below here is invisible */}
             <input type='file'

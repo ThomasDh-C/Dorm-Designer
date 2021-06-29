@@ -35,7 +35,7 @@ function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Draggable Canvas</title>
+        <title>Dorm Designer</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

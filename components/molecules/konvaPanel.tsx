@@ -3,14 +3,16 @@ import { Layer, Image } from "react-konva"
 import useDimensions from 'react-use-dimensions';
 import useImage from 'use-image';
 import styled from 'styled-components'
-import ScrollableStage from './scrollableStage'
-import PrincetonFurniture from './princetonFurniture'
-import { initialShapes, standardFurniture } from './shapes'
-import ControlPanel from './controlPanel'
+import ScrollableStage from '../atoms/scrollableStage'
+import PrincetonFurniture from '../atoms/princetonFurniture'
+import { Shape } from '../atoms/shapes'
+import ScaleButtons from '../compounds/scaleButtons'
+import ShapesBar from "../compounds/shapesBar";
 
 
 
 const FullWidthContainer = styled.div`
+    position: relative;
     width: 100%; 
     height: 60vh; 
     overflow: hidden;
@@ -23,7 +25,7 @@ const KonvaEditor = ({ activeStep, file }) => {
     const [ref, { width, height }] = useDimensions()            // get canvas dimensions
     const [mapScale, setMapScale] = React.useState(0.1)               // scale down map to fill canvas
     const [pttopxscaler, setPttopxscaler] = React.useState(1)   // ratio of map to objs should be 1 ...
-    const [shapes, setShapes] = React.useState(initialShapes)   // shapes array
+    const [shapes, setShapes] = React.useState< Array<Shape> | undefined> ([])   // shapes array
     const [selectedShapeId, selectShapeId] = React.useState(0)  // selected shape
     const [stagePosScale, setPosScale] = React.useState({
         stageScale: 1,
@@ -63,7 +65,6 @@ const KonvaEditor = ({ activeStep, file }) => {
 
     return (
         <>
-            {/* <ControlPanel stagePosScale={stagePosScale} setPosScale={setPosScale} /> */}
             <FullWidthContainer ref={ref}>
                 <ScrollableStage width={width} height={height} stagePosScale={stagePosScale} setPosScale={setPosScale} onMouseDown={checkDeselect} onTouchStart={checkDeselect} setCanvasCoords={setCanvasCoords}>
                     <Layer>
@@ -92,6 +93,8 @@ const KonvaEditor = ({ activeStep, file }) => {
 
                     </Layer>
                 </ScrollableStage>
+                <ScaleButtons stagePosScale={stagePosScale} setPosScale={setPosScale} />
+                <ShapesBar height={height}/>
             </FullWidthContainer>
         </>
     )

@@ -19,6 +19,7 @@
     "next": "10.0.5",
     "next-images": "^1.7.0",
     "react": "17.0.1",
+    "react-column-wrap": "^0.0.2",
     "react-dom": "17.0.1",
     "react-icons": "^4.1.0",
     "react-konva": "^17.0.1-3",

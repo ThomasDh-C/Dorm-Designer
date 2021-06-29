@@ -128,15 +128,6 @@ input[type='text']:focus{
 
 /* Buttons
 ––––––––––––––––––––––––––––––––– */
-button[type='button']{
-  border-radius: var(--border-radius);
-  padding: 4px;
-  transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out;
-  background-color: white;
-  border: 2px solid var(--light-blue);
-}
-
-
 button[type='reset'],
 button[type='submit'] {
   padding: 0.5rem 1.25rem;
@@ -163,7 +154,7 @@ button:hover {
 }
 
 
-button[type='reset'], button[type='button']:hover {
+button[type='reset']:hover {
   background: var(--light-blue);
 }
 

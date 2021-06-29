@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../cssVars'
+import BlueButton from '../atoms/blueButton'
 
 const Row = styled.div`
     display: flex;
@@ -11,6 +12,8 @@ const Row = styled.div`
 const InfoContainer = styled(Row)`
     background-color: ${colors.lightBlue};
     border-radius: 4px;
+    margin-top: .2rem;
+    margin-bottom: .2rem;
 `
 
 const Column = styled.div`
@@ -25,13 +28,13 @@ const Column = styled.div`
 const LongRow = styled(Row)`
     width: 100%;
     justify-content: space-between;
-    padding-bottom: 1rem;
-    padding-top: 3.052rem;
+    padding-bottom: .8rem;
+    // padding-top: 2.852rem;
 `
 
 const NoMargH1 = styled.h1`
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: .2rem;
+    margin-bottom: .2rem;
 `
 const NoMargH6 = styled.h6`
     margin-top: 0;
@@ -41,10 +44,12 @@ const NoMargH6 = styled.h6`
 const UploadIcon = styled.i`
     font-size: 1.2rem;
 `
-const SquareButton = styled.button`
+const SquareButton = styled(BlueButton)`
     height: 54px;
     width: 54px;
     margin-left: 8px;
+    margin-top: .2rem;
+    margin-bottom: .2rem;
 `
 
 const FileInfoBar = ({currFile, setCurrFile}) => {
@@ -62,9 +67,12 @@ const FileInfoBar = ({currFile, setCurrFile}) => {
                             <NoMargH6>{currFile.occupancy}</NoMargH6>
                         </Column>
                     </InfoContainer>
-                    <SquareButton type='button'> <UploadIcon className="fas fa-cogs"/> </SquareButton>
-                    <SquareButton type='button'> <UploadIcon className="fas fa-share-square"/> </SquareButton>
-                    <SquareButton type='button'> <UploadIcon className="fas fa-save"/> </SquareButton>
+                    <div>
+                        <SquareButton type='button'> <UploadIcon className="fas fa-cogs"/> </SquareButton>
+                        <SquareButton type='button'> <UploadIcon className="fas fa-share-square"/> </SquareButton>
+                        <SquareButton type='button'> <UploadIcon className="fas fa-save"/> </SquareButton>
+                    </div>
+                    
                 </Row>
             </LongRow>
     )

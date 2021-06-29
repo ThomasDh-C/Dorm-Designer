@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import UploadFloorPlan from '../atoms/uploadFloorPlan/uploadFloorPlan'
+import UploadFloorPlan from '../atoms/uploadFloorPlan'
 import { Formik, Form, Field, ErrorMessage } from "formik"
 
 const FlexSection = styled.section`

@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, Transformer } from "react-konva"
 import useImage from 'use-image';
 import svgToMiniDataURI from 'mini-svg-data-uri'
-import svgdata from './svgdata.json'
+import svgdata from '../svgdata.json'
 
 const parse = async (content) => {
     const regex = /^\<\?xml.*>/
