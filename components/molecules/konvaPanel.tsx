@@ -21,7 +21,7 @@ const FullWidthContainer = styled.div`
     margin-top: 4px;
 `
 
-const KonvaEditor = ({ file , floorplanunits}) => {
+const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
     const [ref, { width, height }] = useDimensions()            // get canvas dimensions
     const [mapScale, setMapScale] = React.useState(0.1)               // scale down map to fill canvas
     const [shapes, setShapes] = React.useState< Array<Shape> | undefined> ([])   // shapes array
@@ -93,7 +93,7 @@ const KonvaEditor = ({ file , floorplanunits}) => {
                     </Layer>
                 </ScrollableStage>
                 <ScaleButtons stagePosScale={stagePosScale} setPosScale={setPosScale} />
-                <ShapesBar height={height} shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} floorplanunits={floorplanunits}/>
+                <ShapesBar height={height} shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} floorplanunits={floorplanunits} occupancy={occupancy}/>
             </FullWidthContainer>
         </>
     )

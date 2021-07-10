@@ -34,6 +34,7 @@ export const Icon = styled.i`
 `
 
 export const PaddedButton = styled(RoundButton)`
+    position: relative;
     margin-top: 8px;
     width: 40px;
     padding-top: 4px;
@@ -48,6 +49,26 @@ export const PaddedButton = styled(RoundButton)`
         opacity: 1;
     }
 `
+
+export const SillyButton = styled.button`
+    position: relative;
+    border-radius: 10000px;
+    margin-top: 8px;
+    width: 40px;
+    height: 40px;
+    // padding-top: 4px;
+    // padding-left: 1px;
+    border: none;
+    box-shadow: 2px 3px 3px 2px rgba(218, 223, 225, .7);
+    :active, :hover {
+        box-shadow: 1px 2px 1px 1px rgba(218, 223, 225, .7);
+    }
+
+    :hover ${Icon}{
+        opacity: 1;
+    }
+`
+
 export const CentredLabel = styled.label`
     align-self: center;
 `
@@ -60,3 +81,4 @@ export const Divider = styled.hr`
     margin: 8px 0 -4px 0;
     padding: 0;
 `
+
