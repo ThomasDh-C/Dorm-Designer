@@ -25,13 +25,14 @@ const PaddedButton = styled(RoundButton)`
     }
 `
 
-const ScaleButtons = ({ stagePosScale, setPosScale }) => {
+const ScaleButtons = ({ stagePosScale, setPosScale, resetScale}) => {
     const resetscale = () => {
         setPosScale({
             stageScale: 1,
             stageX: 0,
             stageY: 0
         })
+        resetScale()
     }
 
     const zoomIn = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import { Layer, Image } from "react-konva"
 import useDimensions from 'react-use-dimensions';
 import useImage from 'use-image';
@@ -21,8 +21,17 @@ const FullWidthContainer = styled.div`
     margin-top: 4px;
 `
 
+function usePrevious(value) {
+    const ref = useRef()
+    useEffect(() => {
+      ref.current = value
+    })
+    return ref.current
+}
+
 const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
     const [ref, { width, height }] = useDimensions()            // get canvas dimensions
+    
     const [mapScale, setMapScale] = React.useState(0.1)               // scale down map to fill canvas
     const [shapes, setShapes] = React.useState< Array<Shape> | undefined> ([])   // shapes array
     const [selectedShapeId, selectShapeId] = React.useState(0)  // selected shape
@@ -33,7 +42,8 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
     }) // scale of stage and stage x and y position ... updated on stage scroll or drag events
     const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 }) // centre of canvas ... updated on same events as above
 
-    const floorplan = React.useRef(null);
+    const floorplan = React.useRef(null)
+    const prevWidthHeight = usePrevious({'width': width / floorplan?.current?.attrs?.image?.width, 'height': height / floorplan?.current?.attrs?.image?.height})
     const [floorplanSvg] = useImage(file)
 
     // deselect when clicked on empty area
@@ -44,14 +54,14 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
         }
     }
 
-    // ---- TODO: run this normally whenver hit home button (nested callback?)
     // scale is dim_floorplan/ dim_container
     // update position of all shapes in shape State to be same relative to floorplan
     // have to change width and height of reg shapes, images relativescale doesn't change so only position
-    useEffect(() => {
+    const updateScale = () => {
         const Xscale = width / floorplan?.current?.attrs?.image?.width
         const Yscale = height / floorplan?.current?.attrs?.image?.height
         const minscale = Math.min(Xscale, Yscale)
+
         if (!isNaN(minscale)) {
             const r = minscale / mapScale
             setMapScale(minscale)
@@ -60,8 +70,16 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
                 else return { ...shape, x: shape.x * r, y: shape.y * r }
             }))
         }
-
-    }, [floorplanSvg])
+    }
+    useEffect(() => {
+        const Xscale = width / floorplan?.current?.attrs?.image?.width
+        const Yscale = height / floorplan?.current?.attrs?.image?.height
+        if(prevWidthHeight) {
+            if((!prevWidthHeight?.width && Xscale) && (!prevWidthHeight?.height && Yscale)){
+                updateScale()
+            }
+        }
+    }, [prevWidthHeight])
 
     return (
         <>
@@ -92,7 +110,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
 
                     </Layer>
                 </ScrollableStage>
-                <ScaleButtons stagePosScale={stagePosScale} setPosScale={setPosScale} />
+                <ScaleButtons stagePosScale={stagePosScale} setPosScale={setPosScale} resetScale={updateScale} />
                 <ShapesBar height={height} shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} floorplanunits={floorplanunits} occupancy={occupancy}/>
             </FullWidthContainer>
         </>
