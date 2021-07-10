@@ -7,7 +7,7 @@ import ScrollableStage from '../atoms/scrollableStage'
 import PrincetonFurniture from '../atoms/princetonFurniture'
 import { Shape } from '../atoms/shapes'
 import ScaleButtons from '../compounds/scaleButtons'
-import ShapesBar from "../compounds/shapesBar";
+import ShapesBar from "../compounds/shapesBar/shapesBar";
 
 
 
@@ -21,10 +21,9 @@ const FullWidthContainer = styled.div`
     margin-top: 4px;
 `
 
-const KonvaEditor = ({ activeStep, file }) => {
+const KonvaEditor = ({ file , floorplanunits}) => {
     const [ref, { width, height }] = useDimensions()            // get canvas dimensions
     const [mapScale, setMapScale] = React.useState(0.1)               // scale down map to fill canvas
-    const [pttopxscaler, setPttopxscaler] = React.useState(1)   // ratio of map to objs should be 1 ...
     const [shapes, setShapes] = React.useState< Array<Shape> | undefined> ([])   // shapes array
     const [selectedShapeId, selectShapeId] = React.useState(0)  // selected shape
     const [stagePosScale, setPosScale] = React.useState({
@@ -45,6 +44,7 @@ const KonvaEditor = ({ activeStep, file }) => {
         }
     }
 
+    // ---- TODO: run this normally whenver hit home button (nested callback?)
     // scale is dim_floorplan/ dim_container
     // update position of all shapes in shape State to be same relative to floorplan
     // have to change width and height of reg shapes, images relativescale doesn't change so only position
@@ -61,7 +61,7 @@ const KonvaEditor = ({ activeStep, file }) => {
             }))
         }
 
-    }, [width, height, floorplan, floorplanSvg])
+    }, [floorplanSvg])
 
     return (
         <>
@@ -76,7 +76,6 @@ const KonvaEditor = ({ activeStep, file }) => {
                                 <PrincetonFurniture
                                     key={props.id}
                                     shapeProps={props}
-                                    setPttopxscaler={setPttopxscaler}
                                     mapScale={mapScale}
                                     scale={mapScale * props.shapescale}
                                     imagename={props.imagename}
@@ -94,24 +93,10 @@ const KonvaEditor = ({ activeStep, file }) => {
                     </Layer>
                 </ScrollableStage>
                 <ScaleButtons stagePosScale={stagePosScale} setPosScale={setPosScale} />
-                <ShapesBar height={height}/>
+                <ShapesBar height={height} shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} floorplanunits={floorplanunits}/>
             </FullWidthContainer>
         </>
     )
 }
 
 export default KonvaEditor
-
-// if (props.shape == 'rect') return (
-//     <KonvaRectangle
-//     key={props.id}
-//     shapeProps={props}
-//     isSelected={props.id === selectedShapeId}
-//     onSelect={() => { selectShapeId(props.id) }}
-//     onChange={(newAttrs) => {
-//         const tempshapes = shapes.slice()
-//         tempshapes[i] = newAttrs
-//         setShapes(tempshapes)
-//     }}
-// />
-// )

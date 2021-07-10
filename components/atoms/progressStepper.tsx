@@ -1,7 +1,7 @@
 import { Steps, Button } from 'antd';
 import React from 'react'
 
-const { Step } = Steps;
+const { Step } = Steps
 
 const steps = [
     {
@@ -21,15 +21,15 @@ const steps = [
 const ProgressStepper = ({ activeStep, setActiveStep }) => {
 
     const next = () => {
-        setActiveStep(activeStep + 1);
+        setActiveStep(activeStep + 1)
     };
 
     const prev = () => {
-        setActiveStep(activeStep - 1);
+        setActiveStep(activeStep - 1)
     };
 
     const restart = () => {
-        setActiveStep(0);
+        setActiveStep(0)
     }
 
     return (
@@ -59,7 +59,7 @@ const ProgressStepper = ({ activeStep, setActiveStep }) => {
 
             </div>
         </>
-    );
+    )
 }
 
 export default ProgressStepper

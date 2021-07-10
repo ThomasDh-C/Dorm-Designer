@@ -10,7 +10,7 @@ const RoomExists = ({currFile, setCurrFile, id}) => {
     return (
         <PageTemplate>
             <FileInfoBar currFile={currFile} setCurrFile={setCurrFile}/>
-            <KonvaEditor activeStep={1} file={currFile.floorplan}/>
+            <KonvaEditor file={currFile.floorplan} floorplanunits={currFile.scale}/>
         </PageTemplate>
     )
 }

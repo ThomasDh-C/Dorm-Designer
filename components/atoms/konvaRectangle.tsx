@@ -1,19 +1,19 @@
-import React from 'react';
-import { Rect, Transformer } from 'react-konva';
+import React from 'react'
+import { Rect, Transformer } from 'react-konva'
 
 
 
 const KonvaRectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
-    const shapeRef = React.useRef(null);
-    const trRef = React.useRef(null);
+    const shapeRef = React.useRef(null)
+    const trRef = React.useRef(null)
 
     React.useEffect(() => {
         if (isSelected) {
             // we need to attach transformer manually
-            trRef.current.nodes([shapeRef.current]);
-            trRef.current.getLayer().batchDraw();
+            trRef.current.nodes([shapeRef.current])
+            trRef.current.getLayer().batchDraw()
         }
-    }, [isSelected]);
+    }, [isSelected])
 
     return (
         <>
