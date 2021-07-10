@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import RoundButton from '../../atoms/roundButton'
 
 export const FullHeightCol = styled.div`
     position: absolute;
@@ -35,7 +34,7 @@ export const Icon = styled.i`
 `
 
 
-export const SillyButton = styled.button`
+export const ShapeAddButton = styled.button`
     position: relative;
     border-radius: 10000px;
     margin-top: 8px;

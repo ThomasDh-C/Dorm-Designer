@@ -1,4 +1,4 @@
-import { FullHeightCol, RoundedCol, Grid, Icon, CentredLabel, Divider, SillyButton } from './shapesBarstyled'
+import { FullHeightCol, RoundedCol, Grid, Icon, CentredLabel, Divider, ShapeAddButton } from './shapesBarstyled'
 import Arc from './arc'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -28,38 +28,38 @@ const ShapesBar = ({height, shapes, setShapes, canvasCoords, floorplanunits, occ
             <RoundedCol>
                 <CentredLabel>Add</CentredLabel>
                 <Grid>
-                    <SillyButton onClick={()=>addShape('bed')} >
+                    <ShapeAddButton onClick={()=>addShape('bed')} >
                         <Arc percent={percentItems('bed')}/>
                         <Icon className="fas fa-bed" />
-                    </SillyButton>
-                    <SillyButton onClick={()=>addShape('dresser')}>
+                    </ShapeAddButton>
+                    <ShapeAddButton onClick={()=>addShape('dresser')}>
                         <Arc percent={percentItems('dresser')}/>
                         <Icon className="fas shapeicon dressericon" />
-                    </SillyButton>
-                    <SillyButton onClick={()=>addShape('wardrobe')}>
+                    </ShapeAddButton>
+                    <ShapeAddButton onClick={()=>addShape('wardrobe')}>
                         {/* wardrobe */}
                         <Arc percent={percentItems('wardrobe')}/>
                         <Icon className="fas shapeicon wardrobeicon" />
-                    </SillyButton>
-                    <SillyButton onClick={()=>addShape('bookshelf')}>
+                    </ShapeAddButton>
+                    <ShapeAddButton onClick={()=>addShape('bookshelf')}>
                         {/* Shelves */}
                         <Arc percent={percentItems('bookshelf')}/>
                         <Icon className="fas shapeicon shelficon" />
-                    </SillyButton>
-                    <SillyButton onClick={()=>addShape('desk')}>
+                    </ShapeAddButton>
+                    <ShapeAddButton onClick={()=>addShape('desk')}>
                         {/* Desk */}
                         <Arc percent={percentItems('desk')}/>
                         <Icon className="fas shapeicon deskicon" />
-                    </SillyButton>
-                    <SillyButton onClick={()=>addShape('chair')}>
+                    </ShapeAddButton>
+                    <ShapeAddButton onClick={()=>addShape('chair')}>
                         <Arc percent={percentItems('chair')}/>
                         <Icon className="fas fa-chair" />
-                    </SillyButton>
+                    </ShapeAddButton>
                 </Grid>
                 <Divider />
-                <SillyButton style={{alignSelf: 'center'}}>
+                <ShapeAddButton style={{alignSelf: 'center'}}>
                     <Icon className="fas fa-file-upload"/>
-                </SillyButton>
+                </ShapeAddButton>
             </RoundedCol>
         </FullHeightCol>
     )
