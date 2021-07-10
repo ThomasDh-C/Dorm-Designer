@@ -17,7 +17,7 @@ const CustomSvg = styled.svg`
 
 const Arc = ({percent}) => {
     const stroke = 2.5
-    const radius = 20
+    const radius = 45/2
 
     const normalizedRadius = radius - stroke/2
     const _circumference = normalizedRadius * 2 * Math.PI

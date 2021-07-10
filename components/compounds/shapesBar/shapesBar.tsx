@@ -33,24 +33,23 @@ const ShapesBar = ({height, shapes, setShapes, canvasCoords, floorplanunits, occ
                         <Icon className="fas fa-bed" />
                     </SillyButton>
                     <SillyButton onClick={()=>addShape('dresser')}>
-                        {/* Dresser */}
                         <Arc percent={percentItems('dresser')}/>
-                        <label>Dr</label>
+                        <Icon className="fas shapeicon dressericon" />
                     </SillyButton>
                     <SillyButton onClick={()=>addShape('wardrobe')}>
-                        {/* Chest */}
+                        {/* wardrobe */}
                         <Arc percent={percentItems('wardrobe')}/>
-                        <label>Ch</label>
+                        <Icon className="fas shapeicon wardrobeicon" />
                     </SillyButton>
                     <SillyButton onClick={()=>addShape('bookshelf')}>
                         {/* Shelves */}
                         <Arc percent={percentItems('bookshelf')}/>
-                        <label>Shelf</label>
+                        <Icon className="fas shapeicon shelficon" />
                     </SillyButton>
                     <SillyButton onClick={()=>addShape('desk')}>
                         {/* Desk */}
                         <Arc percent={percentItems('desk')}/>
-                        <label>Desk</label>
+                        <Icon className="fas shapeicon deskicon" />
                     </SillyButton>
                     <SillyButton onClick={()=>addShape('chair')}>
                         <Arc percent={percentItems('chair')}/>

@@ -31,33 +31,22 @@ export const Grid = styled.div`
 export const Icon = styled.i`
     opacity: 0.65;
     transition: opacity 100ms ease-in-out;
+    font-size: 20px;
 `
 
-export const PaddedButton = styled(RoundButton)`
-    position: relative;
-    margin-top: 8px;
-    width: 40px;
-    padding-top: 4px;
-    padding-left: 1px;
-    border: solid 2px red;
-    box-shadow: 2px 3px 3px 2px rgba(218, 223, 225, .7);
-    :active, :hover {
-        box-shadow: 1px 2px 1px 1px rgba(218, 223, 225, .7);
-    }
-
-    :hover ${Icon}{
-        opacity: 1;
-    }
-`
 
 export const SillyButton = styled.button`
     position: relative;
     border-radius: 10000px;
     margin-top: 8px;
-    width: 40px;
-    height: 40px;
-    // padding-top: 4px;
-    // padding-left: 1px;
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
     border: none;
     box-shadow: 2px 3px 3px 2px rgba(218, 223, 225, .7);
     :active, :hover {
