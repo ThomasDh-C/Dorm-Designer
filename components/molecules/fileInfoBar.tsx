@@ -53,8 +53,7 @@ const SquareButton = styled(BlueButton)`
 `
 
 const FileInfoBar = ({currFile, setCurrFile, db}) => {
-    const handleSave = () =>{
-        console.log(currFile)
+    const handleSave = () => {
         db.files.update(currFile.id, currFile)
     }
     return(

@@ -21,16 +21,8 @@ const SSRRoom = () => {
     const id: string = router.query.id as string
     const [currFile, setCurrFile] = React.useState<MapFile | undefined>()
     
-    // open the database 
-    // const db = new Dexie("ReactDexie");
-    // db.version(1).stores({
-    //     files: "id, floorplan, name, scale, occupancy, shapes"
-    // })
     const db = new FilesDatabase()
-    // db.open().catch((err) => {
-    //     console.log('heyyy')
-    //     console.log(err.stack || err)
-    // })
+
     useEffect(()=>{
         if(id){
             db.files.get(id).then((file)=>{
