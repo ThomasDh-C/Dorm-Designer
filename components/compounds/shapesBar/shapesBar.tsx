@@ -1,4 +1,4 @@
-import { FullHeightCol, RoundedCol, Grid, Icon, CentredLabel, Divider, ShapeAddButton } from './shapesBarstyled'
+import { FullHeightCol, RoundedCol, Grid, Icon, CentredLabel, Divider, ShapeAddButton, Shaded } from './shapesBarstyled'
 import Arc from './arc'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -23,35 +23,44 @@ const ShapesBar = ({height, shapes, setShapes, canvasCoords, floorplanunits, occ
         else return count/occupancy*100
     }
 
+    const isDisabled = (item)=> {
+        const count = shapes.filter(shape => shape.imagename==item).length
+        if (count == occupancy) return true
+        else return false
+    }
+
     return (
         <FullHeightCol>
             <RoundedCol>
                 <CentredLabel>Add</CentredLabel>
                 <Grid>
-                    <ShapeAddButton onClick={()=>addShape('bed')} >
+                    <ShapeAddButton onClick={()=>addShape('bed')} disabled={isDisabled('bed')}>
+                        <Shaded />
                         <Arc percent={percentItems('bed')}/>
                         <Icon className="fas fa-bed" />
                     </ShapeAddButton>
-                    <ShapeAddButton onClick={()=>addShape('dresser')}>
+                    <ShapeAddButton onClick={()=>addShape('dresser')} disabled={isDisabled('dresser')}>
+                        <Shaded />
                         <Arc percent={percentItems('dresser')}/>
                         <Icon className="fas shapeicon dressericon" />
                     </ShapeAddButton>
-                    <ShapeAddButton onClick={()=>addShape('wardrobe')}>
-                        {/* wardrobe */}
+                    <ShapeAddButton onClick={()=>addShape('wardrobe')} disabled={isDisabled('wardrobe')}>
+                        <Shaded />
                         <Arc percent={percentItems('wardrobe')}/>
                         <Icon className="fas shapeicon wardrobeicon" />
                     </ShapeAddButton>
-                    <ShapeAddButton onClick={()=>addShape('bookshelf')}>
-                        {/* Shelves */}
-                        <Arc percent={percentItems('bookshelf')}/>
+                    <ShapeAddButton onClick={()=>addShape('bookshelf')} disabled={isDisabled('bookshelf')}>
+                        <Shaded />
+                        <Arc percent={percentItems('bookshelf')} />
                         <Icon className="fas shapeicon shelficon" />
                     </ShapeAddButton>
-                    <ShapeAddButton onClick={()=>addShape('desk')}>
-                        {/* Desk */}
+                    <ShapeAddButton onClick={()=>addShape('desk')} disabled={isDisabled('desk')}>
+                        <Shaded />
                         <Arc percent={percentItems('desk')}/>
                         <Icon className="fas shapeicon deskicon" />
                     </ShapeAddButton>
-                    <ShapeAddButton onClick={()=>addShape('chair')}>
+                    <ShapeAddButton onClick={()=>addShape('chair')} disabled={isDisabled('chair')}>
+                        <Shaded />
                         <Arc percent={percentItems('chair')}/>
                         <Icon className="fas fa-chair" />
                     </ShapeAddButton>

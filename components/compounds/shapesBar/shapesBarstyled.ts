@@ -33,6 +33,19 @@ export const Icon = styled.i`
     font-size: 20px;
 `
 
+export const Shaded = styled.div`
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    width: 43px;
+    height: 43px;
+    border-radius: 10000px;
+
+    background-image: linear-gradient(45deg, black 10%, transparent 10%, transparent 50%, black 50%, black 60%, transparent 60%, transparent 100%);
+    background-size: 14.14px 14.14px;
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+`
 
 export const ShapeAddButton = styled.button`
     position: relative;
@@ -48,14 +61,27 @@ export const ShapeAddButton = styled.button`
     
     border: none;
     box-shadow: 2px 3px 3px 2px rgba(218, 223, 225, .7);
-    :active, :hover {
-        box-shadow: 1px 2px 1px 1px rgba(218, 223, 225, .7);
-    }
+    transition: box-shadow 500ms ease-in-out;
 
-    :hover ${Icon}{
-        opacity: 1;
+    :enabled {
+        :active, :hover {
+            box-shadow: 1px 2px 1px 1px rgba(218, 223, 225, .7);
+        }
+        :hover ${Icon}{
+            opacity: 1;
+        }
+    }
+    
+    :disabled {
+        cursor: default;
+        box-shadow: none;
+
+        ${Shaded}{
+            opacity: 0.65;
+        }
     }
 `
+
 
 export const CentredLabel = styled.label`
     align-self: center;
