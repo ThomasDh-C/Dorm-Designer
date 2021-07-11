@@ -79,7 +79,6 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
             }
         }
     }, [prevWidthHeight])
-    console.log(shapes)
     return (
         <>
             <FullWidthContainer ref={ref}>
