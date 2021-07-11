@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { device } from '../components/cssVars';
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import CreateNewFile from '../components/molecules/createNewFile';
-import Dexie from "dexie";
-import { useLiveQuery } from "dexie-react-hooks";
+import CreateNewFile from '../components/molecules/createNewFile'
+import { useLiveQuery } from "dexie-react-hooks"
+import { FilesDatabase } from '../components/filesDatabase'
 
 const Row = styled.div`
   display: flex;
@@ -34,18 +34,10 @@ function Home() {
                                                     occupancy: 4,
                                                     shapes: []
                                                   })
-  // in future make own class: https://dexie.org/docs/Typescript
-  // Set up the database 
-  const db = new Dexie("ReactDexie");
-  //create the database store
-  db.version(1).stores({
-      files: "id, floorplan, name, scale, occupancy, shapes"
-  })
-  db.open().catch((err) => {
-      console.log(err.stack || err)
-  })
-  const allFiles = useLiveQuery(() => db.files.toArray(), []);
-  console.log(allFiles)
+
+  const db = new FilesDatabase()
+  const allFiles = useLiveQuery(() => db.files.toArray(), [])
+
   return (
     <div className={styles.container}>
       <Head>

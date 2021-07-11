@@ -46,8 +46,8 @@ const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile})
     const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 }) // centre of canvas ... updated on same events as above
 
     const floorplanRef = React.useRef(null)
-    const prevWidthHeight = usePrevious({'width': width / floorplanRef?.current?.attrs?.image?.width, 'height': height / floorplanRef?.current?.attrs?.image?.height})
-    
+    const prevWidth = usePrevious(width / floorplanRef?.current?.attrs?.image?.width)
+    const prevHeight = usePrevious(height / floorplanRef?.current?.attrs?.image?.height)
     const [floorplanSvg] = useImage(file)
 
 
@@ -61,7 +61,6 @@ const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile})
     useEffect(()=>setCurrFile((old)=>{
         return {...old, shapes: shapes}
     }),[shapes])
-    console.log(shapes)
 
     // scale is dim_floorplan/ dim_container
     // update position of all shapes in shape State to be same relative to floorplan
@@ -83,12 +82,10 @@ const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile})
     useEffect(() => {
         const Xscale = width / floorplanRef?.current?.attrs?.image?.width
         const Yscale = height / floorplanRef?.current?.attrs?.image?.height
-        if(prevWidthHeight) {
-            if((!prevWidthHeight?.width && Xscale) && (!prevWidthHeight?.height && Yscale)){
-                updateScale()
-            }
+        if((!prevWidth && Xscale) && (!prevHeight && Yscale)){
+            updateScale()
         }
-    }, [prevWidthHeight])
+    }, [prevWidth, prevHeight])
     return (
         <>
             <FullWidthContainer ref={containerRef}>

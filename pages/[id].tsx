@@ -1,12 +1,11 @@
 import {useRouter} from 'next/router'
 import dynamic from "next/dynamic"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MapFile } from '../components/atoms/shapes'
 import PageTemplate from '../components/molecules/pageTemplate'
 import FileInfoBar from '../components/molecules/fileInfoBar'
 import KonvaEditor from '../components/molecules/konvaPanel'
-import { useEffect } from 'react'
-import Dexie from "dexie";
+import { FilesDatabase } from '../components/filesDatabase'
 
 const RoomExists = ({currFile, setCurrFile, id, db}) => {
     return (
@@ -23,13 +22,15 @@ const SSRRoom = () => {
     const [currFile, setCurrFile] = React.useState<MapFile | undefined>()
     
     // open the database 
-    const db = new Dexie("ReactDexie");
-    db.version(1).stores({
-        files: "id, floorplan, name, scale, occupancy, shapes"
-    })
-    db.open().catch((err) => {
-        console.log(err.stack || err)
-    })
+    // const db = new Dexie("ReactDexie");
+    // db.version(1).stores({
+    //     files: "id, floorplan, name, scale, occupancy, shapes"
+    // })
+    const db = new FilesDatabase()
+    // db.open().catch((err) => {
+    //     console.log('heyyy')
+    //     console.log(err.stack || err)
+    // })
     useEffect(()=>{
         if(id){
             db.files.get(id).then((file)=>{
@@ -37,7 +38,6 @@ const SSRRoom = () => {
             })
         }
     },[id])
-    // console.log(db.files.get(id))
     if(currFile && currFile.id==id) return <RoomExists currFile={currFile} setCurrFile={setCurrFile} id={id} db={db}/>
     return <PageTemplate> <h1>Room doesn't exist</h1> </PageTemplate>
 }
