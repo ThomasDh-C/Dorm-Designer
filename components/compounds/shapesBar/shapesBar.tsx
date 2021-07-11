@@ -11,7 +11,7 @@ const ShapesBar = ({height, shapes, setShapes, canvasCoords, floorplanunits, occ
                 imagename: name,
                 x: canvasCoords.x,
                 y: canvasCoords.y,
-                shapescale: floorplanunits,
+                shapescale: 1,
         }
         setShapes(oldArray => [...oldArray, newshape])
     }

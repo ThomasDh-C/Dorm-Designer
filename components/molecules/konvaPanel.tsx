@@ -49,9 +49,8 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
     // deselect when clicked on empty area
     const checkDeselect = (e) => {
         const clickedOnEmpty = (e.target.getLayer() === floorplan.current.getLayer()) || (e.target === e.target.getStage())
-        if (clickedOnEmpty) {
-            selectShapeId(null)
-        }
+        if (clickedOnEmpty) selectShapeId(null)
+        
     }
 
     // scale is dim_floorplan/ dim_container
@@ -80,7 +79,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
             }
         }
     }, [prevWidthHeight])
-
+    console.log(shapes)
     return (
         <>
             <FullWidthContainer ref={ref}>
@@ -95,7 +94,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
                                     key={props.id}
                                     shapeProps={props}
                                     mapScale={mapScale}
-                                    scale={mapScale * props.shapescale}
+                                    scale={mapScale * props.shapescale*floorplanunits}
                                     imagename={props.imagename}
                                     isSelected={props.id === selectedShapeId}
                                     onSelect={() => { selectShapeId(props.id) }}
