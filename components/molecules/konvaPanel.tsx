@@ -30,25 +30,28 @@ function usePrevious(value) {
 }
 
 const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
-    const [ref, { width, height }] = useDimensions()            // get canvas dimensions
+    const [containerRef, { width, height }] = useDimensions()                    // get canvas dimensions
     
-    const [mapScale, setMapScale] = React.useState(0.1)               // scale down map to fill canvas
-    const [shapes, setShapes] = React.useState< Array<Shape> | undefined> ([])   // shapes array
-    const [selectedShapeId, selectShapeId] = React.useState(0)  // selected shape
+    const [mapScale, setMapScale] = React.useState(0.1)               // scale down/up map to fill canvas
+    const [shapes, setShapes] = React.useState< Array<Shape> | undefined> ([])            // shapes array
+    const [selectedShapeId, selectShapeId] = React.useState(0)                          // selected shape
     const [stagePosScale, setPosScale] = React.useState({
         stageScale: 1,
         stageX: 0,
         stageY: 0
-    }) // scale of stage and stage x and y position ... updated on stage scroll or drag events
+    })            // scale of stage and stage x and y position ... updated on stage scroll or drag events
     const [canvasCoords, setCanvasCoords] = React.useState({ x: 0, y: 0 }) // centre of canvas ... updated on same events as above
 
-    const floorplan = React.useRef(null)
-    const prevWidthHeight = usePrevious({'width': width / floorplan?.current?.attrs?.image?.width, 'height': height / floorplan?.current?.attrs?.image?.height})
+    const floorplanRef = React.useRef(null)
+    const prevWidthHeight = usePrevious({'width': width / floorplanRef?.current?.attrs?.image?.width, 'height': height / floorplanRef?.current?.attrs?.image?.height})
+    
     const [floorplanSvg] = useImage(file)
+
+
 
     // deselect when clicked on empty area
     const checkDeselect = (e) => {
-        const clickedOnEmpty = (e.target.getLayer() === floorplan.current.getLayer()) || (e.target === e.target.getStage())
+        const clickedOnEmpty = (e.target.getLayer() === floorplanRef.current.getLayer()) || (e.target === e.target.getStage())
         if (clickedOnEmpty) selectShapeId(null)
         
     }
@@ -57,8 +60,8 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
     // update position of all shapes in shape State to be same relative to floorplan
     // have to change width and height of reg shapes, images relativescale doesn't change so only position
     const updateScale = () => {
-        const Xscale = width / floorplan?.current?.attrs?.image?.width
-        const Yscale = height / floorplan?.current?.attrs?.image?.height
+        const Xscale = width / floorplanRef?.current?.attrs?.image?.width
+        const Yscale = height / floorplanRef?.current?.attrs?.image?.height
         const minscale = Math.min(Xscale, Yscale)
 
         if (!isNaN(minscale)) {
@@ -71,8 +74,8 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
         }
     }
     useEffect(() => {
-        const Xscale = width / floorplan?.current?.attrs?.image?.width
-        const Yscale = height / floorplan?.current?.attrs?.image?.height
+        const Xscale = width / floorplanRef?.current?.attrs?.image?.width
+        const Yscale = height / floorplanRef?.current?.attrs?.image?.height
         if(prevWidthHeight) {
             if((!prevWidthHeight?.width && Xscale) && (!prevWidthHeight?.height && Yscale)){
                 updateScale()
@@ -81,10 +84,10 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
     }, [prevWidthHeight])
     return (
         <>
-            <FullWidthContainer ref={ref}>
+            <FullWidthContainer ref={containerRef}>
                 <ScrollableStage width={width} height={height} stagePosScale={stagePosScale} setPosScale={setPosScale} onMouseDown={checkDeselect} onTouchStart={checkDeselect} setCanvasCoords={setCanvasCoords}>
                     <Layer>
-                        <Image ref={floorplan} image={floorplanSvg} scaleX={mapScale} scaleY={mapScale}/>
+                        <Image ref={floorplanRef} image={floorplanSvg} scaleX={mapScale} scaleY={mapScale}/>
                     </Layer>
                     <Layer>
                         {shapes.map((props, i) => {

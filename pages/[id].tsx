@@ -5,6 +5,7 @@ import { MapFile } from '../components/atoms/shapes'
 import PageTemplate from '../components/molecules/pageTemplate'
 import FileInfoBar from '../components/molecules/fileInfoBar'
 import KonvaEditor from '../components/molecules/konvaPanel'
+import { useEffect } from 'react'
 
 const RoomExists = ({currFile, setCurrFile, id}) => {
     return (
@@ -17,15 +18,20 @@ const RoomExists = ({currFile, setCurrFile, id}) => {
 
 const SSRRoom = () => {
     const router = useRouter()
-    const {id} = router.query
-    const [currFile, setCurrFile] = React.useState<MapFile | undefined>(JSON.parse(localStorage.getItem('currshape')))
-    
+    const id: string = router.query.id as string
+    const [currFile, setCurrFile] = React.useState<MapFile | undefined>()
+    // console.log(JSON.parse(localStorage.getItem('files'))[id])
+    useEffect(()=>{
+        const file = JSON.parse(localStorage.getItem('files'))[id]
+        setCurrFile(file)
+    },[id])
+    // console.log(currFile)
     if(currFile && currFile.id==id) return <RoomExists currFile={currFile} setCurrFile={setCurrFile} id={id}/>
     return <PageTemplate> <h1>Room doesn't exist</h1> </PageTemplate>
 }
 
 const Room = dynamic(Promise.resolve(SSRRoom), {
     ssr: false,
-  })
+})
 
 export default Room

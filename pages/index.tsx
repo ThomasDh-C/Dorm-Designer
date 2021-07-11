@@ -30,6 +30,7 @@ function Home() {
                                                     id: uuidv4(), 
                                                     scale: 1/16,
                                                     occupancy: 4,
+                                                    shapes: []
                                                   })
   
   return (

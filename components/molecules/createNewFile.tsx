@@ -83,7 +83,20 @@ const CreateNewFile = ({currFile, setFile}) => {
             const newFile = {...currFile, ...temp}
             setFile(newFile)
             setSubmitting(false)
-            localStorage.setItem('currshape', JSON.stringify(newFile))
+            
+            
+            const memberToAdd = {[newFile.id]: newFile}
+            const oldfiles = JSON.parse(localStorage.getItem('files'))
+            console.log(oldfiles)
+
+            if(!oldfiles) {
+                console.log(JSON.stringify(newFile))
+                localStorage.setItem('files', JSON.stringify(memberToAdd))
+            }
+            else {
+                const newFiles = {...oldfiles, memberToAdd}
+                localStorage.setItem('files', JSON.stringify(newFiles))
+            }
             router.push('./'+ currFile.id)
         }
     }
