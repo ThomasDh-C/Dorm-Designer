@@ -28,12 +28,15 @@ function usePrevious(value) {
     })
     return ref.current
 }
+const setInitShapes = (shapes, mapScale) => {
+    return shapes.map((shape) => {return {...shape, x: shape.relx*mapScale, y: shape.rely*mapScale}})
+}
 
-const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
+const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile}) => {
     const [containerRef, { width, height }] = useDimensions()                    // get canvas dimensions
     
-    const [mapScale, setMapScale] = React.useState(0.1)               // scale down/up map to fill canvas
-    const [shapes, setShapes] = React.useState< Array<Shape> | undefined> ([])            // shapes array
+    const [mapScale, setMapScale] = React.useState(1)               // scale down/up map to fill canvas
+    const [shapes, setShapes] = React.useState< Array<Shape> | undefined> (setInitShapes(currFile.shapes, mapScale))            // shapes array
     const [selectedShapeId, selectShapeId] = React.useState(0)                          // selected shape
     const [stagePosScale, setPosScale] = React.useState({
         stageScale: 1,
@@ -53,8 +56,12 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
     const checkDeselect = (e) => {
         const clickedOnEmpty = (e.target.getLayer() === floorplanRef.current.getLayer()) || (e.target === e.target.getStage())
         if (clickedOnEmpty) selectShapeId(null)
-        
     }
+
+    useEffect(()=>setCurrFile((old)=>{
+        return {...old, shapes: shapes}
+    }),[shapes])
+    console.log(shapes)
 
     // scale is dim_floorplan/ dim_container
     // update position of all shapes in shape State to be same relative to floorplan
@@ -69,7 +76,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
             setMapScale(minscale)
             setShapes(shapes.map((shape) => {
                 if (shape.shape !== 'img') return { ...shape, x: shape.x * r, y: shape.y * r, width: shape?.width * r, height: shape?.height * r }
-                else return { ...shape, x: shape.x * r, y: shape.y * r }
+                else return { ...shape, x: shape.x * r, y: shape.y * r, relx: shape.x * r/minscale, rely: shape.y/minscale}
             }))
         }
     }
@@ -112,7 +119,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy}) => {
                     </Layer>
                 </ScrollableStage>
                 <ScaleButtons stagePosScale={stagePosScale} setPosScale={setPosScale} resetScale={updateScale} />
-                <ShapesBar height={height} shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} floorplanunits={floorplanunits} occupancy={occupancy}/>
+                <ShapesBar shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} occupancy={occupancy} mapScale={mapScale}/>
             </FullWidthContainer>
         </>
     )

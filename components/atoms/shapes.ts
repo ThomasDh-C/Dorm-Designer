@@ -4,6 +4,8 @@ export interface Shape {
     imagename?: string,
     x: number,
     y: number,
+    relx?: number,
+    rely?: number,
     shapescale?: number,
     resizable?: boolean,
     width?: number,

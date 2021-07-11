@@ -52,7 +52,11 @@ const SquareButton = styled(BlueButton)`
     margin-bottom: .2rem;
 `
 
-const FileInfoBar = ({currFile, setCurrFile}) => {
+const FileInfoBar = ({currFile, setCurrFile, db}) => {
+    const handleSave = () =>{
+        console.log(currFile)
+        db.files.update(currFile.id, currFile)
+    }
     return(
         <LongRow>
                 <NoMargH1>{currFile.name}</NoMargH1>
@@ -70,7 +74,7 @@ const FileInfoBar = ({currFile, setCurrFile}) => {
                     <div>
                         <SquareButton type='button'> <UploadIcon className="fas fa-cogs"/> </SquareButton>
                         <SquareButton type='button'> <UploadIcon className="fas fa-share-square"/> </SquareButton>
-                        <SquareButton type='button'> <UploadIcon className="fas fa-save"/> </SquareButton>
+                        <SquareButton type='button' onClick={handleSave}> <UploadIcon className="fas fa-save"/> </SquareButton>
                     </div>
                     
                 </Row>

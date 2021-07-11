@@ -3,7 +3,7 @@ import Arc from './arc'
 import { v4 as uuidv4 } from 'uuid'
 
 
-const ShapesBar = ({height, shapes, setShapes, canvasCoords, floorplanunits, occupancy}) => {
+const ShapesBar = ({shapes, setShapes, canvasCoords, occupancy, mapScale}) => {
     const addShape = (name) => {
         const newshape = {
                 id: uuidv4(),
@@ -11,6 +11,8 @@ const ShapesBar = ({height, shapes, setShapes, canvasCoords, floorplanunits, occ
                 imagename: name,
                 x: canvasCoords.x,
                 y: canvasCoords.y,
+                relx: canvasCoords.x/ mapScale,
+                rely: canvasCoords.y/ mapScale,
                 shapescale: 1,
         }
         setShapes(oldArray => [...oldArray, newshape])

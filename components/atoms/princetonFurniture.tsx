@@ -36,6 +36,8 @@ const PrincetonFurniture = ({ shapeProps, mapScale, scale, imagename, isSelected
                         ...shapeProps,
                         x: e.target.x(),
                         y: e.target.y(),
+                        relx: e.target.x()/ mapScale,
+                        rely: e.target.y()/ mapScale,
                     })
                 }}
                 onTransformEnd={() => {
@@ -44,6 +46,8 @@ const PrincetonFurniture = ({ shapeProps, mapScale, scale, imagename, isSelected
                         ...shapeProps,
                         x: node.x(),
                         y: node.y(),
+                        relx: node.x()/ mapScale,
+                        rely: node.y()/ mapScale,
                         rotation: node.rotation()
                     })
                 }}

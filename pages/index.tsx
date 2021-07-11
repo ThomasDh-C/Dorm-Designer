@@ -5,6 +5,8 @@ import { device } from '../components/cssVars';
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import CreateNewFile from '../components/molecules/createNewFile';
+import Dexie from "dexie";
+import { useLiveQuery } from "dexie-react-hooks";
 
 const Row = styled.div`
   display: flex;
@@ -32,7 +34,18 @@ function Home() {
                                                     occupancy: 4,
                                                     shapes: []
                                                   })
-  
+  // in future make own class: https://dexie.org/docs/Typescript
+  // Set up the database 
+  const db = new Dexie("ReactDexie");
+  //create the database store
+  db.version(1).stores({
+      files: "id, floorplan, name, scale, occupancy, shapes"
+  })
+  db.open().catch((err) => {
+      console.log(err.stack || err)
+  })
+  const allFiles = useLiveQuery(() => db.files.toArray(), []);
+  console.log(allFiles)
   return (
     <div className={styles.container}>
       <Head>
@@ -45,15 +58,19 @@ function Home() {
         <Row>
           <Column>
             <h2>Create new</h2>
-            <CreateNewFile currFile={currFile} setFile={setCurrFile}/>
+            <CreateNewFile currFile={currFile} setFile={setCurrFile} db={db}/>
 
           </Column>
           <Column>
             <h2>Import old</h2>
           </Column>
         </Row>
+        
         <h2>Recent</h2>
-
+        {allFiles && allFiles.map((file)=>{
+          return (<p><b>Name:</b> {file.name} ----- <b>Id:</b> {file.id}</p>)
+        }
+        )}
       </main>
 
       <footer className={styles.footer}>

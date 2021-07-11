@@ -46,7 +46,7 @@ const Child = styled.div`
     flex: 1;
 `
 
-const CreateNewFile = ({currFile, setFile}) => { 
+const CreateNewFile = ({currFile, setFile, db}) => { 
     const router = useRouter()
 
     const validateInput = (values) => {
@@ -73,30 +73,14 @@ const CreateNewFile = ({currFile, setFile}) => {
         if (currFile.floorplan) {
             let temp = {}
             Object.keys(values).forEach(function(key) {
-                if(key=='name'){
-                    temp[key] = values[key]
-                }
-                else{
-                    temp[key] = eval(values[key])
-                }
+                if(key=='name') temp[key] = values[key]
+                else temp[key] = eval(values[key])
               })
             const newFile = {...currFile, ...temp}
             setFile(newFile)
             setSubmitting(false)
-            
-            
-            const memberToAdd = {[newFile.id]: newFile}
-            const oldfiles = JSON.parse(localStorage.getItem('files'))
-            console.log(oldfiles)
 
-            if(!oldfiles) {
-                console.log(JSON.stringify(newFile))
-                localStorage.setItem('files', JSON.stringify(memberToAdd))
-            }
-            else {
-                const newFiles = {...oldfiles, memberToAdd}
-                localStorage.setItem('files', JSON.stringify(newFiles))
-            }
+            db.files.add(newFile)
             router.push('./'+ currFile.id)
         }
     }
