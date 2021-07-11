@@ -83,12 +83,11 @@ const CreateNewFile = ({currFile, setFile}) => {
             const newFile = {...currFile, ...temp}
             setFile(newFile)
             setSubmitting(false)
-            console.log(newFile)
             localStorage.setItem('currshape', JSON.stringify(newFile))
             router.push('./'+ currFile.id)
         }
     }
-    // console.log(currFile)
+    
 
     return (
         <FlexSection>
