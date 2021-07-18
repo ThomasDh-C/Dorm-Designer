@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import svgToMiniDataURI from 'mini-svg-data-uri'
+import Ajv from 'ajv'
+import fileSchema from './fileSchema.json'
+import { useRouter } from 'next/router'
 import BlueButton from './blueButton'
+
+import { v4 as uuidv4 } from 'uuid'
 
 const Button = styled(BlueButton)`
     width: 100%;
@@ -33,34 +37,35 @@ const SmallImage = styled.img`
     max-height: 80%;
 `
 
-const parse = async (content) => {
-  return svgToMiniDataURI(content)
-}
-
-const UploadFloorPlan = ({setFile}) => { 
+const UploadJson = ({setFile, db}) => { 
     const hiddenFileInput = React.useRef(null)
     const [localFile, setLocalFile] = React.useState<string | undefined>('')
-    let fileReader;
+    const router = useRouter()
+    let fileReader
 
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleClick = event => {
-        hiddenFileInput.current.click();
+        hiddenFileInput.current.click()
     }
     
     // parse data from input and store it
     const handleFileRead = (e) => {
         const content = fileReader.result;
-        parse(content)
-            .then(parsedData => {
-                setLocalFile(parsedData)
-                setFile((oldFile)=> {
-                    return {...oldFile, floorplan: parsedData}
-                })
-            })
-            .catch(err => {
-                console.error(err);
-            })
+        const file = JSON.parse(content)
+        const ajv = new Ajv()
+        const schema = fileSchema
+        var validator = ajv.compile(schema);
+        if (!validator(file)) {
+            console.log(validator.errors)
+            // do this better
+        }
+        else {
+            file.id = uuidv4()
+            setFile(file)
+            db.files.add(file)
+            router.push('./'+ file.id)
+        }
     }
 
     // parse raw file and send it to parser
@@ -76,11 +81,11 @@ const UploadFloorPlan = ({setFile}) => {
                 {localFile ? 
                 <>
                     <NoSpaceP marginBottom='8px'>Replace floor plan</NoSpaceP>
-                    <SmallImage src={localFile} />
+                    {/* <SmallImage src={localFile} /> */}
                 </>
                 :
                 <>
-                    <NoSpaceP marginBottom='8px'>Upload floor plan SVG</NoSpaceP>
+                    <NoSpaceP marginBottom='8px'>Upload JSON</NoSpaceP>
                     <UploadIcon className="fas fa-file-upload"/>
                 </>
                 }
@@ -88,11 +93,11 @@ const UploadFloorPlan = ({setFile}) => {
             {/* below here is invisible */}
             <input type='file'
                 ref={hiddenFileInput}
-                accept='.svg'
+                accept='.json'
                 onChange={e => handleFileChosen(e.target.files[0])}
                 style={{display: 'none'}}
             />
         </SmallFloorplan>)
 }
 
-export default UploadFloorPlan
+export default UploadJson

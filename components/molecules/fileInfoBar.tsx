@@ -56,6 +56,15 @@ const FileInfoBar = ({currFile, setCurrFile, db}) => {
     const handleSave = () => {
         db.files.update(currFile.id, currFile)
     }
+    const handleShare = async () => {
+        const data = await db.files.get(currFile.id)
+        const json = JSON.stringify(data)
+        const a = document.createElement("a")
+        const file = new Blob([json], { type: "text/plain" })
+        a.href = URL.createObjectURL(file)
+        a.download = `${currFile.name}.json`
+        a.click()
+    }
     return(
         <LongRow>
                 <NoMargH1>{currFile.name}</NoMargH1>
@@ -72,7 +81,7 @@ const FileInfoBar = ({currFile, setCurrFile, db}) => {
                     </InfoContainer>
                     <div>
                         <SquareButton type='button'> <UploadIcon className="fas fa-cogs"/> </SquareButton>
-                        <SquareButton type='button'> <UploadIcon className="fas fa-share-square"/> </SquareButton>
+                        <SquareButton type='button' onClick={handleShare}> <UploadIcon className="fas fa-share-square"/> </SquareButton>
                         <SquareButton type='button' onClick={handleSave}> <UploadIcon className="fas fa-save"/> </SquareButton>
                     </div>
                     

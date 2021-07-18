@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import CreateNewFile from '../components/molecules/createNewFile'
 import { useLiveQuery } from "dexie-react-hooks"
 import { FilesDatabase } from '../components/filesDatabase'
+import UploadJson from '../components/atoms/uploadJson';
 
 const Row = styled.div`
   display: flex;
@@ -51,16 +52,16 @@ function Home() {
           <Column>
             <h2>Create new</h2>
             <CreateNewFile currFile={currFile} setFile={setCurrFile} db={db}/>
-
           </Column>
           <Column>
             <h2>Import old</h2>
+            <UploadJson setFile={setCurrFile} db={db}/>
           </Column>
         </Row>
         
         <h2>Recent</h2>
-        {allFiles && allFiles.map((file)=>{
-          return (<p><b>Name:</b> {file.name} ----- <b>Id:</b> {file.id}</p>)
+        {allFiles && allFiles.map((file, i)=>{
+          return (<p key={'recentfilecards'+i}><b>Name:</b> {file.name} ----- <b>Id:</b> {file.id}</p>)
         }
         )}
       </main>

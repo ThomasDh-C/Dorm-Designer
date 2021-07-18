@@ -102,8 +102,8 @@ const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile})
                                     mapScale={mapScale}
                                     scale={mapScale * props.shapescale*floorplanunits}
                                     imagename={props.imagename}
-                                    isSelected={props.id === selectedShapeId}
-                                    onSelect={() => { selectShapeId(props.id) }}
+                                    isSelected={i === selectedShapeId}
+                                    onSelect={() => { selectShapeId(i) }}
                                     onChange={(newAttrs) => {
                                         const tempshapes = shapes.slice()
                                         tempshapes[i] = newAttrs
