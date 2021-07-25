@@ -1,0 +1,91 @@
+{
+    "$ref": "#/definitions/MapFile",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+      "MapFile": {
+        "additionalProperties": false,
+        "properties": {
+          "floorplan": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "occupancy": {
+            "type": "number"
+          },
+          "scale": {
+            "type": "number"
+          },
+          "shapes": {
+            "items": {
+              "$ref": "#/definitions/Shape"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "floorplan",
+          "name",
+          "id",
+          "scale",
+          "occupancy",
+          "shapes"
+        ],
+        "type": "object"
+      },
+      "Shape": {
+        "additionalProperties": false,
+        "properties": {
+          "fill": {
+            "type": "string"
+          },
+          "height": {
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          },
+          "imagename": {
+            "type": "string"
+          },
+          "relx": {
+            "type": "number"
+          },
+          "rely": {
+            "type": "number"
+          },
+          "resizable": {
+            "type": "boolean"
+          },
+          "rotation": {
+            "type": "number"
+          },
+          "shape": {
+            "type": "string"
+          },
+          "shapescale": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "shape",
+          "x",
+          "y"
+        ],
+        "type": "object"
+      }
+    }
+  }
