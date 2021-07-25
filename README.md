@@ -1,34 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Dorm Designer
+## What is it?
+Dorm designer is a website for students to design their dorm and share their designs with their roommates. All furniture is automatically scaled to the right size and the amount of furniture left to add is also shown.
+ 
+It can either be run locally as explained below or found [here](https://dorm-setup-assistant.vercel.app/). All data is stored on your own device to increase security (we don't store any of your floorplans).
 
-## Getting Started
+<img src="./readme_imgs/dorm designer.png"><img/>
 
-First, run the development server:
+## Running locally
+This site is develloped using NextJS. It uses styled components for styling, KonvaJS for the canvas renderer and DexieJS for storing all floorplans locally on your computer in a database.
+
+To run the development server run:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+When contributing a pull request please make clear the purpose of the changes made and they will be accepted as soon as possible. 
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Bugs
+If any bugs are found please submit a issue on github. This is a side project so these will be addressed as soon as possible
