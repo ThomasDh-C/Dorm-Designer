@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../cssVars'
 import BlueButton from '../atoms/blueButton'
+import InfoContainer from '../compounds/infoContainer'
 
 const Row = styled.div`
     display: flex;
@@ -9,21 +10,6 @@ const Row = styled.div`
     flex-direction: row;
 `
 
-const InfoContainer = styled(Row)`
-    background-color: ${colors.lightBlue};
-    border-radius: 4px;
-    margin-top: .2rem;
-    margin-bottom: .2rem;
-`
-
-const Column = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-`
 
 const LongRow = styled(Row)`
     width: 100%;
@@ -69,16 +55,7 @@ const FileInfoBar = ({currFile, setCurrFile, db}) => {
         <LongRow>
                 <NoMargH1>{currFile.name}</NoMargH1>
                 <Row>
-                    <InfoContainer>
-                        <Column style={{marginRight:'4px'}}>
-                            <label>Scale</label>
-                            <NoMargH6>{currFile.scale}'' : 1'</NoMargH6>
-                        </Column>
-                        <Column>
-                            <label>Occupancy</label>
-                            <NoMargH6>{currFile.occupancy}</NoMargH6>
-                        </Column>
-                    </InfoContainer>
+                    <InfoContainer scale = {currFile.scale} occupancy={currFile.occupancy}/>
                     <div>
                         <SquareButton type='button'> <UploadIcon className="fas fa-cogs"/> </SquareButton>
                         <SquareButton type='button' onClick={handleShare}> <UploadIcon className="fas fa-share-square"/> </SquareButton>

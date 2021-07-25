@@ -8,10 +8,11 @@ import KonvaEditor from '../components/molecules/konvaPanel'
 import { FilesDatabase } from '../components/filesDatabase'
 
 const RoomExists = ({currFile, setCurrFile, id, db}) => {
+    
     return (
         <PageTemplate>
             <FileInfoBar currFile={currFile} setCurrFile={setCurrFile} db={db}/>
-            <KonvaEditor file={currFile.floorplan} floorplanunits={currFile.scale} occupancy={currFile.occupancy} currFile={currFile} setCurrFile={setCurrFile}/>
+            <KonvaEditor currFile={currFile} setCurrFile={setCurrFile}/>
         </PageTemplate>
     )
 }
@@ -30,6 +31,7 @@ const SSRRoom = () => {
             })
         }
     },[id])
+    
     if(currFile && currFile.id==id) return <RoomExists currFile={currFile} setCurrFile={setCurrFile} id={id} db={db}/>
     return <PageTemplate> <h1>Room doesn't exist</h1> </PageTemplate>
 }

@@ -32,7 +32,7 @@ const setInitShapes = (shapes, mapScale) => {
     return shapes.map((shape) => {return {...shape, x: shape.relx*mapScale, y: shape.rely*mapScale}})
 }
 
-const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile}) => {
+const KonvaEditor = ({currFile, setCurrFile}) => {
     const [containerRef, { width, height }] = useDimensions()                    // get canvas dimensions
     
     const [mapScale, setMapScale] = React.useState(1)               // scale down/up map to fill canvas
@@ -48,9 +48,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile})
     const floorplanRef = React.useRef(null)
     const prevWidth = usePrevious(width / floorplanRef?.current?.attrs?.image?.width)
     const prevHeight = usePrevious(height / floorplanRef?.current?.attrs?.image?.height)
-    const [floorplanSvg] = useImage(file)
-
-
+    const [floorplanSvg] = useImage(currFile.floorplan)
 
     // deselect when clicked on empty area
     const checkDeselect = (e) => {
@@ -100,7 +98,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile})
                                     key={props.id}
                                     shapeProps={props}
                                     mapScale={mapScale}
-                                    scale={mapScale * props.shapescale*floorplanunits}
+                                    scale={mapScale * props.shapescale*currFile.scale}
                                     imagename={props.imagename}
                                     isSelected={i === selectedShapeId}
                                     onSelect={() => { selectShapeId(i) }}
@@ -116,7 +114,7 @@ const KonvaEditor = ({ file , floorplanunits, occupancy, currFile, setCurrFile})
                     </Layer>
                 </ScrollableStage>
                 <ScaleButtons stagePosScale={stagePosScale} setPosScale={setPosScale} resetScale={updateScale} />
-                <ShapesBar shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} occupancy={occupancy} mapScale={mapScale}/>
+                <ShapesBar shapes={shapes} setShapes={setShapes} canvasCoords={canvasCoords} occupancy={currFile.occupancy} mapScale={mapScale}/>
             </FullWidthContainer>
         </>
     )

@@ -32,6 +32,7 @@ body {
   --light-blue: #E9F3F9;
   --dark-blue: #0974d8;
   --red: #f56565;
+  --dark-red: #f02424;
   --text-decoration-color: var(--gray-400);
   --text-color: var(--gray-800);
   --focus-ring-color: var(--blue);

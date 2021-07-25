@@ -8,6 +8,8 @@ import CreateNewFile from '../components/molecules/createNewFile'
 import { useLiveQuery } from "dexie-react-hooks"
 import { FilesDatabase } from '../components/filesDatabase'
 import UploadJson from '../components/atoms/uploadJson';
+import RecentCard from '../components/atoms/recentCard';
+
 
 const Row = styled.div`
   display: flex;
@@ -27,6 +29,10 @@ const Column = styled.div`
   flex: 1;
 `
 
+const RecentBoxes = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 function Home() {
   const [currFile, setCurrFile] = React.useState({floorplan: '', 
                                                     name: '', 
@@ -48,6 +54,14 @@ function Home() {
 
       <main className={styles.main}>
         <h1>Dorm Designer</h1>
+        <h2>Tips</h2>
+          <p>
+            Find the floorplan in SVG format for your building. For Princeton students, go to http://rooms.tigerapps.org and find your floorplan, then right click and download image as SVG.
+          </p>
+          <p>
+            Upload this floorplan in the Create New section. You should see a small preview in the box. In the bottom left of the floorplan in a larger viewer, you should find the scale. Enter the name of the file, the scale and the number of occupants, then click Submit.
+          </p>
+
         <Row>
           <Column>
             <h2>Create new</h2>
@@ -60,10 +74,10 @@ function Home() {
         </Row>
         
         <h2>Recent</h2>
-        {allFiles && allFiles.map((file, i)=>{
-          return (<p key={'recentfilecards'+i}><b>Name:</b> {file.name} ----- <b>Id:</b> {file.id}</p>)
-        }
-        )}
+        <RecentBoxes>
+          {allFiles && allFiles.map((file, i)=> <RecentCard file={file} db={db} key={'recentfilecards'+i}/> )}
+        </RecentBoxes>
+        
       </main>
 
       <footer className={styles.footer}>

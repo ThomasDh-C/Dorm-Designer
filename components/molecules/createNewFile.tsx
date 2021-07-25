@@ -7,7 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 const FlexSection = styled.section`
     display: flex;
     flex-direction: row;
-    margin-right: 16px;
+    margin-right: 48px;
 `
 
 const LargeForm = styled(Form)`
